@@ -1,5 +1,5 @@
 # Delta
-Delta Team project for Hackathon of Academia de Código in Terceira bootcamp.
+Delta Team project for Hackathon of <Academia de Código_> @Terceira #19bootcamp.
 
 Delta Team:
   - Tiago Ormonde
