@@ -32,6 +32,8 @@ public class DeltaGame extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(player.getTexture(), player.getPosX(), player.getPosY());
 		batch.end();
+
+		player.move();
 	}
 	
 	@Override

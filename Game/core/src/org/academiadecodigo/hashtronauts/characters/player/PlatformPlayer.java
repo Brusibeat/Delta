@@ -4,10 +4,14 @@ import com.badlogic.gdx.graphics.Texture;
 
 import java.awt.*;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+
 public class PlatformPlayer extends Player {
 
     private Texture texture;
     private Rectangle rectangle;
+    private boolean isJumping = false;
 
     public Rectangle getRectangle() {
         return rectangle;
@@ -41,11 +45,44 @@ public class PlatformPlayer extends Player {
         rectangle.y = posY;
     }
 
-    private void jump(){
+    public void jump() {
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+
+
+
+            rectangle.y += 200 * Gdx.graphics.getDeltaTime();
+
+        }
     }
 
-    private void move(){
+    public void move() {
+
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            rectangle.x += 200 * Gdx.graphics.getDeltaTime();
+
+        }
+
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            rectangle.x -= 200 * Gdx.graphics.getDeltaTime();
+        }
+
+        if (rectangle.x < 0) {
+            rectangle.x = 0;
+        }
+        //Window widht 1920
+        if (rectangle.x > 1820) {    // 1920-100
+            rectangle.x = 1820;
+        }
+
+        if (rectangle.y < 0) {
+            rectangle.y = 0;
+        }
+        //Window height 1920
+        if (rectangle.y > 930) {   // 1080 - 150
+            rectangle.y = 930;
+        }
 
     }
 
