@@ -6,6 +6,7 @@ import java.awt.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import org.academiadecodigo.hashtronauts.Configurations;
 
 public class PlatformPlayer extends Player {
 
@@ -60,28 +61,28 @@ public class PlatformPlayer extends Player {
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            rectangle.x += 200 * Gdx.graphics.getDeltaTime();
+            rectangle.x -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
 
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            rectangle.x -= 200 * Gdx.graphics.getDeltaTime();
+            rectangle.x += Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
         }
 
         if (rectangle.x < 0) {
             rectangle.x = 0;
         }
         //Window widht 1920
-        if (rectangle.x > 1820) {    // 1920-100
-            rectangle.x = 1820;
+        if (rectangle.x > Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH) {
+            rectangle.x = Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH;
         }
 
         if (rectangle.y < 0) {
             rectangle.y = 0;
         }
         //Window height 1920
-        if (rectangle.y > 930) {   // 1080 - 150
-            rectangle.y = 930;
+        if (rectangle.y > Configurations.WINDOW_HEIGHT - Configurations.PLAYER_HEIGHT) {
+            rectangle.y = Configurations.WINDOW_HEIGHT - Configurations.PLAYER_HEIGHT;
         }
 
     }
