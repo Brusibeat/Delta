@@ -17,7 +17,7 @@ public class PlatformPlayer extends Player {
 
     public void jump() {
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
 
 
 
@@ -30,18 +30,18 @@ public class PlatformPlayer extends Player {
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            x += 200 * Gdx.graphics.getDeltaTime();
+            x -= 200 * Gdx.graphics.getDeltaTime();
 
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            x -= 200 * Gdx.graphics.getDeltaTime();
+            x += 200 * Gdx.graphics.getDeltaTime();
         }
 
         if (x < 0) {
             x = 0;
         }
-        //Window widht 1920
+        //Window width 1920
         if (x > 1820) {    // 1920-100
             x = 1820;
         }
