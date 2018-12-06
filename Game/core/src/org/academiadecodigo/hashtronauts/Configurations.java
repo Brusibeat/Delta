@@ -7,6 +7,8 @@ public class Configurations {
     public static final int PLAYER_HEIGHT = 150;
     public static final int PLAYER_WIDTH = 100;
     public static final int PLAYER_FLOW = 250;
+    public static final int PLAYER_JUMP = 550;
+    public static final int PLAYER_FALL = 400;
 
 
 }

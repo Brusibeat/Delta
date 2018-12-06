@@ -6,6 +6,7 @@ import java.awt.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.utils.TimeUtils;
 import org.academiadecodigo.hashtronauts.Configurations;
 
 public class PlatformPlayer extends Player {
@@ -13,9 +14,18 @@ public class PlatformPlayer extends Player {
     private Texture texture;
     private Rectangle rectangle;
     private boolean isJumping = false;
+    private long lastJumpTime;
 
     public Rectangle getRectangle() {
         return rectangle;
+    }
+
+    public long getLastJumpTime() {
+        return lastJumpTime;
+    }
+
+    public void stopJump(){
+        isJumping = false;
     }
 
     public void setRectangle(Rectangle rectangle) {
@@ -46,14 +56,14 @@ public class PlatformPlayer extends Player {
         rectangle.y = posY;
     }
 
+    public boolean isJumping(){
+        return isJumping;
+    }
+
     public void jump() {
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-
-
-
-            rectangle.y += 200 * Gdx.graphics.getDeltaTime();
-
+            isJumping = true;
+            lastJumpTime = TimeUtils.nanoTime();
         }
     }
 
@@ -61,7 +71,7 @@ public class PlatformPlayer extends Player {
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            rectangle.x -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
+                rectangle.x -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
 
         }
 
