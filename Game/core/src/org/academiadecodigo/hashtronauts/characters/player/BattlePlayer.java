@@ -11,7 +11,7 @@ public class BattlePlayer extends Player implements BattlingCharacters {
     private int skillAttack;
     private int attackPoints;
 
-    
+
     @Override
     public int attack() {
         setAttackPoints(10);
