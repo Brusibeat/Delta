@@ -3,12 +3,10 @@ package org.academiadecodigo.hashtronauts.levels;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import org.academiadecodigo.hashtronauts.battle.BattleController;
 import org.academiadecodigo.hashtronauts.battle.PlayerAction;
 import org.academiadecodigo.hashtronauts.characters.enemies.Enemy;
 import org.academiadecodigo.hashtronauts.characters.player.BattlePlayer;
-import org.academiadecodigo.hashtronauts.characters.player.Player;
 
 //View
 public class BattleLevel {
@@ -19,20 +17,20 @@ public class BattleLevel {
     private BattlePlayer playerModel;
 
     //Visual objects for battle information
-     //positions
+    //positions
     private Rectangle player;
     private Rectangle enemy;
-     //Health indicators
+    //Health indicators
     private String playerHp;
     private String enemyHp;
-     //user inputs
+    //user inputs
     private PlayerAction[] playerActions;
 
     //Controller for battle logic
     private BattleController controller;
 
     public BattleLevel(BattlePlayer player, Enemy enemyModel, SpriteBatch batch){
-        this.playerModel = player;
+        playerModel = player;
         this.enemyModel = enemyModel;
         this.batch = batch;
 
@@ -49,7 +47,7 @@ public class BattleLevel {
         enemy.setPosition(700, 250);
 
         //Define health values in text
-        playerHp = "Player HP: " + player.getHealth();
+        playerHp = "Player HP: " + playerModel.getHealth();
         enemyHp = "Enemy HP: " + enemyModel.getHealth();
 
         //Create a controller

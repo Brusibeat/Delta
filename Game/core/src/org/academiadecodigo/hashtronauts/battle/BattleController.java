@@ -80,7 +80,7 @@ public class BattleController {
                 battle.getPlayerModel().getHit( battle.getEnemyModel().useSkill() );
             }
         }
-        
+
     }
 
 

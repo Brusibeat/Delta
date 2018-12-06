@@ -59,6 +59,10 @@ public class BattlePlayer extends Player implements BattlingCharacters {
         return dead;
     }
 
+    public void getHit(int damage){
+        this.health -= damage;
+    }
+
     public int getHealth() {
         return health;
     }
