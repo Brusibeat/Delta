@@ -11,15 +11,16 @@ public class BattlePlayer extends Player implements BattlingCharacters {
     private int skillAttack;
     private int attackPoints;
 
-
-
-
+    
     @Override
     public int attack() {
         setAttackPoints(10);
 
         if(skillCooldown < 3){
             skillCooldown ++;
+        }
+        if(skillCooldown >= 3){
+            skillCooldown = 3;
         }
         return attackPoints;
     }
@@ -28,6 +29,9 @@ public class BattlePlayer extends Player implements BattlingCharacters {
     public boolean defend() {
         if(skillCooldown < 3){
             skillCooldown ++;
+        }
+        if(skillCooldown >= 3){
+            skillCooldown = 3;
         }
         return defend = true;
     }
@@ -48,7 +52,6 @@ public class BattlePlayer extends Player implements BattlingCharacters {
         }
         return dead;
     }
-
 
     public int getHealth() {
         return health;
