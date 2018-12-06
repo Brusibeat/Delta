@@ -2,26 +2,60 @@ package org.academiadecodigo.hashtronauts.characters.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import org.academiadecodigo.hashtronauts.Configurations;
+
+import java.awt.*;
 
 public class PlatformPlayer extends Player {
 
-    private int x;
-    private int y;
+    private Texture texture;
+    private Rectangle rectangle;
     private boolean isJumping = false;
 
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
 
-    public PlatformPlayer(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
+
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
+    public int getPosX() {
+        return rectangle.x;
+    }
+
+    public void setPosX(int posX) {
+        rectangle.x = posX;
+    }
+
+    public int getPosY() {
+        return rectangle.y;
+    }
+
+    public void setPosY(int posY) {
+        rectangle.y = posY;
     }
 
     public void jump() {
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+
+            if (isJumping){
+                rectangle.y += Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
+
+            }
 
 
-
-            y += 200 * Gdx.graphics.getDeltaTime();
+            //rectangle.y -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
 
         }
     }
@@ -30,28 +64,28 @@ public class PlatformPlayer extends Player {
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            x -= 200 * Gdx.graphics.getDeltaTime();
+            rectangle.x -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
 
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            x += 200 * Gdx.graphics.getDeltaTime();
+            rectangle.x += Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
         }
 
-        if (x < 0) {
-            x = 0;
-        }
-        //Window width 1920
-        if (x > 1820) {    // 1920-100
-            x = 1820;
+        if (rectangle.x < 0) {
+            rectangle.x = 0;
         }
 
-        if (y < 0) {
-            y = 0;
+        if (rectangle.x > Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH) {
+            rectangle.x = Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH;
         }
-        //Window height 1920
-        if (y > 930) {   // 1080 - 150
-            y = 930;
+
+        if (rectangle.y < 0) {
+            rectangle.y = 0;
+        }
+
+        if (rectangle.y > Configurations.WINDOW_HEIGHT - Configurations.PLAYER_HEIGHT) {
+            rectangle.y = Configurations.WINDOW_HEIGHT - Configurations.PLAYER_HEIGHT;
         }
 
     }
