@@ -10,7 +10,7 @@ public abstract class GameObject {
     private int width;
     private int height;
 
-    public GameObject(Sprite sprite, float posX, float posY, int width, int height){
+    public GameObject(Sprite sprite, int posX, int posY, int width, int height){
         this.sprite = sprite;
         this.posX = posX;
         this.posY = posY;

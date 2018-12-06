@@ -2,9 +2,9 @@ package org.academiadecodigo.hashtronauts.characters;
 
 public interface BattlingCharacters {
 
-    void attack();
+    int attack();
 
-    void defend();
+    boolean defend();
 
     void useSkill();
 
