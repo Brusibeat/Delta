@@ -20,7 +20,7 @@ public abstract class Enemy implements BattlingCharacters {
     }
 
     @Override
-    public void useSkill() {
+    public int useSkill() {
 
     }
 

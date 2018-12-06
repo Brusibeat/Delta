@@ -5,22 +5,31 @@ import org.academiadecodigo.hashtronauts.characters.BattlingCharacters;
 public class BattlePlayer extends Player implements BattlingCharacters {
 
     private int health;
-    private int skillCooldown = 3;
+    private int skillCooldown;
     private boolean dead;
     private boolean defend;
     private int skillAttack;
     private int attackPoints;
 
+    public BattlePlayer(int health){
+        this.health = health;
+        this.skillCooldown = 3;
+
+        this.dead = false;
+        this.defend = false;
+        this.skillAttack = 15;
+        this.attackPoints = 10;
+
+    }
 
     @Override
     public int attack() {
-        setAttackPoints(10);
 
         if(skillCooldown < 3){
-            skillCooldown ++;
+            skillCooldown --;
         }
-        if(skillCooldown >= 3){
-            skillCooldown = 3;
+        if(skillCooldown <= 0){
+            skillCooldown = 0;
         }
         return attackPoints;
     }
@@ -37,12 +46,9 @@ public class BattlePlayer extends Player implements BattlingCharacters {
     }
 
     @Override
-    public void useSkill() {
-        if(skillCooldown != 3){
-            setSkillAttack(0);
-            skillCooldown++;
-        }
-        setSkillAttack(15);
+    public int useSkill() {
+        skillCooldown = 3;
+        return skillAttack;
     }
 
     @Override
