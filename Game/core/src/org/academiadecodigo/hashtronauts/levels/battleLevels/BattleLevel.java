@@ -1,9 +1,9 @@
-package org.academiadecodigo.hashtronauts.levels;
+package org.academiadecodigo.hashtronauts.levels.battleLevels;
 
 import org.academiadecodigo.hashtronauts.characters.enemies.Enemy;
 import org.academiadecodigo.hashtronauts.characters.player.BattlePlayer;
 
-public class BattleLevel {
+public abstract class BattleLevel implements Battle {
 
     private Enemy enemy;
     private BattlePlayer battlePlayer;

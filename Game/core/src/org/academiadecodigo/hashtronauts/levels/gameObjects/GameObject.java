@@ -1,60 +1,44 @@
 package org.academiadecodigo.hashtronauts.levels.gameObjects;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+
+import java.awt.*;
 
 public abstract class GameObject {
 
-    private Sprite sprite;
-    private int posX;
-    private int posY;
-    private int width;
-    private int height;
+    private Texture texture;
+    private Rectangle rectangle;
 
-    public GameObject(Sprite sprite, int posX, int posY, int width, int height){
-        this.sprite = sprite;
-        this.posX = posX;
-        this.posY = posY;
-        this.width = width;
-        this.height = height;
+    public GameObject(String texture, int posX, int posY, int width, int height){
+        if(texture == null) {
+            this.texture = createTexture(posX, posY, width, height);
+        }else{
+            this.texture = new Texture(texture);
+        }
+
+        rectangle = new Rectangle();
+        rectangle.x = posX;
+        rectangle.y = posY;
+        rectangle.width = width;
+        rectangle.height = height;
+
     }
 
-    public Sprite getSprite() {
-        return sprite;
+    public Rectangle getRectangle() {
+        return rectangle;
     }
 
-    public void setSprite(Sprite sprite) {
-        this.sprite = sprite;
+    public Texture getTexture() {
+        return texture;
     }
 
-    public float getPosX() {
-        return posX;
-    }
-
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
-    public float getPosY() {
-        return posY;
-    }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
+    //PARA TESTES
+    private Texture createTexture(int posX, int posY, int width, int height) {
+        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.BLUE);
+        pixmap.fill();
+        return new Texture(pixmap);
     }
 }

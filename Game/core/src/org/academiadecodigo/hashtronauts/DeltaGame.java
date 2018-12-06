@@ -7,7 +7,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
 import org.academiadecodigo.hashtronauts.characters.player.PlatformPlayer;
-import org.academiadecodigo.hashtronauts.levels.PlatformLevel;
+import org.academiadecodigo.hashtronauts.levels.gameObjects.GameObject;
+import org.academiadecodigo.hashtronauts.levels.platformLevels.PlatformLevel;
+import org.academiadecodigo.hashtronauts.levels.platformLevels.levels.Platform1;
 
 import java.awt.*;
 
@@ -21,16 +23,32 @@ public class DeltaGame extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        level = new PlatformLevel();
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Configurations.WINDOW_WIDTH,Configurations.WINDOW_HEIGHT);
+
+        level = new Platform1();
+
+        ((Platform1) level).initLevelObjects();
         level.levelInit();
-        player = level.getPlatformPlayer();
+
+        player = level.getPlayer();
     }
 
     @Override
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        camera.update();
+
+        batch.setProjectionMatrix(camera.combined);
+
         batch.begin();
+
+        for (GameObject object : ((Platform1) level).getGameObjects()){
+            batch.draw(object.getTexture(), object.getRectangle().x, object.getRectangle().y);
+        }
+        
         batch.draw(player.getTexture(), player.getPosX(), player.getPosY());
 
         if (player.isJumping()) {

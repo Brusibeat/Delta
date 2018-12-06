@@ -16,8 +16,11 @@ public class PlatformPlayer extends Player {
     private boolean isJumping = false;
     private long lastJumpTime;
 
-    public Rectangle getRectangle() {
-        return rectangle;
+    public void initPlayer(){
+        texture = new Texture("freddy.png");
+        rectangle = new Rectangle();
+        rectangle.x = 0;
+        rectangle.y = 0;
     }
 
     public long getLastJumpTime() {
@@ -28,28 +31,20 @@ public class PlatformPlayer extends Player {
         isJumping = false;
     }
 
-    public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
-    }
-
     public Texture getTexture() {
         return texture;
-    }
-
-    public void setTexture(Texture texture) {
-        this.texture = texture;
     }
 
     public int getPosX() {
         return rectangle.x;
     }
 
-    public void setPosX(int posX) {
-        rectangle.x = posX;
-    }
-
     public int getPosY() {
         return rectangle.y;
+    }
+
+    public void setPosX(int posX) {
+        rectangle.x = posX;
     }
 
     public void setPosY(int posY) {
@@ -61,9 +56,11 @@ public class PlatformPlayer extends Player {
     }
 
     public void jump() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            isJumping = true;
-            lastJumpTime = TimeUtils.nanoTime();
+        if (!isJumping) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+                isJumping = true;
+                lastJumpTime = TimeUtils.nanoTime();
+            }
         }
     }
 
@@ -71,8 +68,7 @@ public class PlatformPlayer extends Player {
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                rectangle.x -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
-
+            rectangle.x -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -82,7 +78,7 @@ public class PlatformPlayer extends Player {
         if (rectangle.x < 0) {
             rectangle.x = 0;
         }
-        //Window widht 1920
+
         if (rectangle.x > Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH) {
             rectangle.x = Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH;
         }
@@ -90,7 +86,7 @@ public class PlatformPlayer extends Player {
         if (rectangle.y < 0) {
             rectangle.y = 0;
         }
-        //Window height 1920
+
         if (rectangle.y > Configurations.WINDOW_HEIGHT - Configurations.PLAYER_HEIGHT) {
             rectangle.y = Configurations.WINDOW_HEIGHT - Configurations.PLAYER_HEIGHT;
         }
