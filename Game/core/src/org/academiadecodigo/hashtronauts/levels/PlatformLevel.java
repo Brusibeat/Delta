@@ -2,6 +2,7 @@ package org.academiadecodigo.hashtronauts.levels;
 
 import com.badlogic.gdx.graphics.Texture;
 import org.academiadecodigo.hashtronauts.characters.player.PlatformPlayer;
+import com.badlogic.gdx.math.Rectangle;
 
 import java.awt.*;
 

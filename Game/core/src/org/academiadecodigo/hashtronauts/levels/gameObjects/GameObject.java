@@ -1,30 +1,40 @@
 package org.academiadecodigo.hashtronauts.levels.gameObjects;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public abstract class GameObject {
 
-    private Sprite sprite;
+    private Texture texture;
     private int posX;
     private int posY;
     private int width;
     private int height;
 
-    public GameObject(Sprite sprite, int posX, int posY, int width, int height){
-        this.sprite = sprite;
+    public GameObject(Texture texture, int posX, int posY, int width, int height){
+        this.texture = texture;
         this.posX = posX;
         this.posY = posY;
         this.width = width;
         this.height = height;
     }
 
+    public Texture getTexture() {
+        return texture;
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
+    }
+
+    /*
     public Sprite getSprite() {
         return sprite;
     }
 
     public void setSprite(Sprite sprite) {
         this.sprite = sprite;
-    }
+    }*/
 
     public float getPosX() {
         return posX;

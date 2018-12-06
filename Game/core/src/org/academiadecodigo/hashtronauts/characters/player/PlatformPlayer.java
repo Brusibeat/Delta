@@ -1,35 +1,37 @@
 package org.academiadecodigo.hashtronauts.characters.player;
 
-import com.badlogic.gdx.graphics.Texture;
-
-import java.awt.*;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.TimeUtils;
 import org.academiadecodigo.hashtronauts.Configurations;
+import com.badlogic.gdx.math.Rectangle;
+
+import java.awt.*;
 
 public class PlatformPlayer extends Player {
 
     private Texture texture;
     private Rectangle rectangle;
     private boolean isJumping = false;
+    private boolean isFalling = false;
     private long lastJumpTime;
 
     public Rectangle getRectangle() {
         return rectangle;
     }
 
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
+
     public long getLastJumpTime() {
         return lastJumpTime;
     }
 
-    public void stopJump(){
+    public void stopJump() {
         isJumping = false;
-    }
-
-    public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
+        isFalling = true;
     }
 
     public Texture getTexture() {
@@ -40,7 +42,7 @@ public class PlatformPlayer extends Player {
         this.texture = texture;
     }
 
-    public int getPosX() {
+    public float getPosX() {
         return rectangle.x;
     }
 
@@ -48,7 +50,7 @@ public class PlatformPlayer extends Player {
         rectangle.x = posX;
     }
 
-    public int getPosY() {
+    public float getPosY() {
         return rectangle.y;
     }
 
@@ -56,12 +58,22 @@ public class PlatformPlayer extends Player {
         rectangle.y = posY;
     }
 
-    public boolean isJumping(){
+    public boolean isJumping() {
         return isJumping;
     }
 
+    public boolean isFalling() {
+        return isFalling;
+    }
+
+    public void setFalling(boolean falling) {
+        isFalling = falling;
+    }
+
     public void jump() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+
+        if ( Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !isJumping ) {
+
             isJumping = true;
             lastJumpTime = TimeUtils.nanoTime();
         }
@@ -96,7 +108,7 @@ public class PlatformPlayer extends Player {
 
     }
 
-    private void useSkill(){
+    private void useSkill() {
 
     }
 }
