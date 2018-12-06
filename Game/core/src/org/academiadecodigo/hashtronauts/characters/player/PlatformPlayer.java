@@ -71,8 +71,7 @@ public class PlatformPlayer extends Player {
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-                rectangle.x -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
-
+            rectangle.x -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
@@ -82,7 +81,7 @@ public class PlatformPlayer extends Player {
         if (rectangle.x < 0) {
             rectangle.x = 0;
         }
-        //Window widht 1920
+
         if (rectangle.x > Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH) {
             rectangle.x = Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH;
         }
@@ -90,7 +89,7 @@ public class PlatformPlayer extends Player {
         if (rectangle.y < 0) {
             rectangle.y = 0;
         }
-        //Window height 1920
+
         if (rectangle.y > Configurations.WINDOW_HEIGHT - Configurations.PLAYER_HEIGHT) {
             rectangle.y = Configurations.WINDOW_HEIGHT - Configurations.PLAYER_HEIGHT;
         }
