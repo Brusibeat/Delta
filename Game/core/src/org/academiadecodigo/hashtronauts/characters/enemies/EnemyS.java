@@ -2,28 +2,18 @@ package org.academiadecodigo.hashtronauts.characters.enemies;
 
 public class EnemyS extends Enemy {
 
-    private int health = 40;
-
-
-    public int getHealth() {
-        return health;
+    public EnemyS (int health) {
+        health = health;
     }
 
     @Override
-    public void enemyAction() {
-        double action = Math.random();
+    public void setHealth(int health) {
+        super.setHealth(health);
+    }
 
-        if (action <= 0.75) {
-            attack();
-            return;
-        }
-
-        if (action <= 0.8) {
-            defend();
-            return;
-        }
-
-        useSkill();
+    @Override
+    public void getHit(int dmg) {
+        super.getHit(dmg);
     }
 
     @Override
@@ -42,8 +32,8 @@ public class EnemyS extends Enemy {
     }
 
     @Override
-    public void attack() {
-        setDamageDealt(2);
+    public int attack() {
+        return 8;
     }
 
     @Override
@@ -53,9 +43,5 @@ public class EnemyS extends Enemy {
     @Override
     public boolean isDead() {
         return super.isDead();
-    }
-
-    public void receiveDamage(int dmg) {
-        this.health -= dmg;
     }
 }

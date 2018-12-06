@@ -4,19 +4,17 @@ import org.academiadecodigo.hashtronauts.characters.BattlingCharacters;
 
 public abstract class Enemy implements BattlingCharacters {
 
+    private int health;
     private boolean defending = false;
     private boolean dead = false;
-    private int damageDealt;
 
-    public int getDamageDealt() {
-        return damageDealt;
+    public void setHealth(int health) {
+        this.health = health;
     }
 
-    public void setDamageDealt(int damageDealt) {
-        this.damageDealt = damageDealt;
+    public void getHit(int dmg) {
+        health -= dmg;
     }
-
-    public void enemyAction() {}
 
     public boolean isDefending() {
         return defending;
@@ -27,7 +25,9 @@ public abstract class Enemy implements BattlingCharacters {
     }
 
     @Override
-    public void attack() {}
+    public int attack() {
+        return 0;
+    }
 
     @Override
     public void defend() {
