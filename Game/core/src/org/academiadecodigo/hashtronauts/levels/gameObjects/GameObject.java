@@ -3,8 +3,7 @@ package org.academiadecodigo.hashtronauts.levels.gameObjects;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-
-import java.awt.*;
+import com.badlogic.gdx.math.Rectangle;
 
 public abstract class GameObject {
 

@@ -11,8 +11,6 @@ import org.academiadecodigo.hashtronauts.levels.gameObjects.GameObject;
 import org.academiadecodigo.hashtronauts.levels.platformLevels.PlatformLevel;
 import org.academiadecodigo.hashtronauts.levels.platformLevels.levels.Platform1;
 
-import java.awt.*;
-
 public class DeltaGame extends ApplicationAdapter {
     private SpriteBatch batch;
     private OrthographicCamera camera;
@@ -24,7 +22,7 @@ public class DeltaGame extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Configurations.WINDOW_WIDTH,Configurations.WINDOW_HEIGHT);
+        camera.setToOrtho(false, Configurations.WINDOW_WIDTH, Configurations.WINDOW_HEIGHT);
 
         level = new Platform1();
 
@@ -32,6 +30,8 @@ public class DeltaGame extends ApplicationAdapter {
         level.levelInit();
 
         player = level.getPlayer();
+
+        player.setFalling(false);
     }
 
     @Override
@@ -45,10 +45,15 @@ public class DeltaGame extends ApplicationAdapter {
 
         batch.begin();
 
-        for (GameObject object : ((Platform1) level).getGameObjects()){
+        for (GameObject object : ((Platform1) level).getGameObjects()) {
             batch.draw(object.getTexture(), object.getRectangle().x, object.getRectangle().y);
+
+            //check if player landed (floor, or platform)
+            if (player.getPosY() == 0 || player.getRectangle().overlaps(object.getRectangle())) {
+                player.setFalling(false);
+            }
         }
-        
+
         batch.draw(player.getTexture(), player.getPosX(), player.getPosY());
 
         if (player.isJumping()) {
@@ -58,13 +63,22 @@ public class DeltaGame extends ApplicationAdapter {
 
             if (TimeUtils.nanoTime() - player.getLastJumpTime() > 300000000) {
                 player.stopJump();
+
             }
         } else {
+
             player.setPosY((int) (player.getPosY() - (Configurations.PLAYER_FALL * Gdx.graphics.getDeltaTime())));
+            // player.setFalling(true);
+
         }
 
+
         player.move();
-        player.jump();
+
+        //if player is not jumping, player is allowed to jump
+        if (!player.isFalling()) {
+            player.jump();
+        }
 
         batch.end();
     }

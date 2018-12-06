@@ -1,11 +1,9 @@
 package org.academiadecodigo.hashtronauts.characters.player;
 
-import com.badlogic.gdx.graphics.Texture;
-
-import java.awt.*;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 import org.academiadecodigo.hashtronauts.Configurations;
 
@@ -14,53 +12,75 @@ public class PlatformPlayer extends Player {
     private Texture texture;
     private Rectangle rectangle;
     private boolean isJumping = false;
+    private boolean isFalling = false;
     private long lastJumpTime;
 
-    public void initPlayer(){
+    public void initPlayer() {
         texture = new Texture("freddy.png");
         rectangle = new Rectangle();
         rectangle.x = 0;
         rectangle.y = 0;
     }
 
+    public Rectangle getRectangle() {
+        return rectangle;
+    }
+
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }
+
     public long getLastJumpTime() {
         return lastJumpTime;
     }
 
-    public void stopJump(){
+    public void stopJump() {
         isJumping = false;
+        isFalling = true;
     }
 
     public Texture getTexture() {
         return texture;
     }
 
-    public int getPosX() {
-        return rectangle.x;
+    public void setTexture(Texture texture) {
+        this.texture = texture;
     }
 
-    public int getPosY() {
-        return rectangle.y;
+    public float getPosX() {
+        return rectangle.x;
     }
 
     public void setPosX(int posX) {
         rectangle.x = posX;
     }
 
+    public float getPosY() {
+        return rectangle.y;
+    }
+
     public void setPosY(int posY) {
         rectangle.y = posY;
     }
 
-    public boolean isJumping(){
+    public boolean isJumping() {
         return isJumping;
     }
 
+    public boolean isFalling() {
+        return isFalling;
+    }
+
+    public void setFalling(boolean falling) {
+        isFalling = falling;
+    }
+
     public void jump() {
-        if (!isJumping) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                isJumping = true;
-                lastJumpTime = TimeUtils.nanoTime();
-            }
+
+        if ( Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !isJumping ) {
+
+            isJumping = true;
+            lastJumpTime = TimeUtils.nanoTime();
         }
     }
 
@@ -93,7 +113,7 @@ public class PlatformPlayer extends Player {
 
     }
 
-    private void useSkill(){
+    private void useSkill() {
 
     }
 }
