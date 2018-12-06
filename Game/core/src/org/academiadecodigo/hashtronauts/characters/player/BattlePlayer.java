@@ -14,8 +14,9 @@ public class BattlePlayer extends Player implements BattlingCharacters {
 
 
     @Override
-    public void attack() {
+    public int attack() {
         setAttackPoints(10);
+        return attackPoints;
     }
 
     @Override
@@ -48,7 +49,6 @@ public class BattlePlayer extends Player implements BattlingCharacters {
     public int getSkillCooldown() {
         return skillCooldown;
     }
-
 
     public void setDead(boolean dead) {
         this.dead = dead;
