@@ -2,7 +2,7 @@ package org.academiadecodigo.hashtronauts.characters;
 
 public interface BattlingCharacters {
 
-    int attack();
+    void attack();
 
     boolean defend();
 

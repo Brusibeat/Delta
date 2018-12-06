@@ -2,30 +2,20 @@ package org.academiadecodigo.hashtronauts.characters.player;
 
 import org.academiadecodigo.hashtronauts.characters.BattlingCharacters;
 
-import java.util.Random;
-
 public class BattlePlayer extends Player implements BattlingCharacters {
 
     private int health;
-    private int skillCooldown;
+    private final int skillCooldown = 3;
     private boolean dead;
     private boolean defend;
+    private int skillAttack;
+    private int attackPoints;
 
 
 
     @Override
-    public int attack() {
-
-        int attackPoints = 10;
-        Random result = new Random();
-
-        int attackSuccess = result.nextInt(100-0) + 0;
-        System.out.println(attackSuccess);
-
-        if(attackSuccess >= 10){
-           return attackPoints;
-        }
-        return 0;
+    public void attack() {
+        setAttackPoints(10);
     }
 
     @Override
@@ -59,9 +49,6 @@ public class BattlePlayer extends Player implements BattlingCharacters {
         return skillCooldown;
     }
 
-    public void setSkillCooldown(int skillCooldown) {
-        this.skillCooldown = skillCooldown;
-    }
 
     public void setDead(boolean dead) {
         this.dead = dead;
@@ -73,6 +60,22 @@ public class BattlePlayer extends Player implements BattlingCharacters {
 
     public void setDefend(boolean defend) {
         this.defend = defend;
+    }
+
+    public int getSkillAttack() {
+        return skillAttack;
+    }
+
+    public void setSkillAttack(int skillAttack) {
+        this.skillAttack = skillAttack;
+    }
+
+    public int getAttackPoints() {
+        return attackPoints;
+    }
+
+    public void setAttackPoints(int attackPoints) {
+        this.attackPoints = attackPoints;
     }
 }
 
