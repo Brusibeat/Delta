@@ -5,12 +5,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public abstract class GameObject {
 
     private Sprite sprite;
-    private float posX;
-    private float posY;
+    private int posX;
+    private int posY;
     private int width;
     private int height;
 
-    public GameObject(Sprite sprite, float posX, float posY, int width, int height){
+    public GameObject(Sprite sprite, int posX, int posY, int width, int height){
         this.sprite = sprite;
         this.posX = posX;
         this.posY = posY;
