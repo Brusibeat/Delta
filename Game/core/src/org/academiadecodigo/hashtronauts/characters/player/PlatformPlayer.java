@@ -2,7 +2,11 @@ package org.academiadecodigo.hashtronauts.characters.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+<<<<<<< HEAD
 import com.badlogic.gdx.graphics.Texture;
+=======
+import com.badlogic.gdx.utils.TimeUtils;
+>>>>>>> bdd3b52ca78bd1846930f1f1bff3047fa2a3c5b7
 import org.academiadecodigo.hashtronauts.Configurations;
 
 import java.awt.*;
@@ -12,9 +16,18 @@ public class PlatformPlayer extends Player {
     private Texture texture;
     private Rectangle rectangle;
     private boolean isJumping = false;
+    private long lastJumpTime;
 
     public Rectangle getRectangle() {
         return rectangle;
+    }
+
+    public long getLastJumpTime() {
+        return lastJumpTime;
+    }
+
+    public void stopJump(){
+        isJumping = false;
     }
 
     public void setRectangle(Rectangle rectangle) {
@@ -45,6 +58,7 @@ public class PlatformPlayer extends Player {
         rectangle.y = posY;
     }
 
+<<<<<<< HEAD
     public void jump() {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
@@ -56,7 +70,16 @@ public class PlatformPlayer extends Player {
 
 
             //rectangle.y -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
+=======
+    public boolean isJumping(){
+        return isJumping;
+    }
+>>>>>>> bdd3b52ca78bd1846930f1f1bff3047fa2a3c5b7
 
+    public void jump() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            isJumping = true;
+            lastJumpTime = TimeUtils.nanoTime();
         }
     }
 
@@ -65,7 +88,6 @@ public class PlatformPlayer extends Player {
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             rectangle.x -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
-
         }
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
