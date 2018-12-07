@@ -17,7 +17,7 @@ public class BattleController {
 
     public void playerTurn(){
         //Attack option
-        switch(getPlayerInput()){
+        /*switch(getPlayerInput()){
             case 'A': battle.getEnemyModel().getHit( battle.getPlayerModel().attack() );
 
                     break;
@@ -34,14 +34,14 @@ public class BattleController {
                 break;
             case '4':
                 break;
-        }
+        }*/
 
     }
 
     public void enemyTurn(){
         double random = Math.random() * 3;
 
-        if( random == 0 ){
+        /*if( random == 0 ){
             if(isSuccessful()){
                 battle.getPlayerModel().getHit( battle.getEnemyModel().attack() );
             }
@@ -55,7 +55,7 @@ public class BattleController {
             if(isSuccessful() ){
                 battle.getPlayerModel().getHit( battle.getEnemyModel().useSkill() );
             }
-        }
+        }*/
 
     }
 

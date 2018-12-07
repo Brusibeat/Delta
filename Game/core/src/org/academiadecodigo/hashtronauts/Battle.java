@@ -107,7 +107,7 @@ public class Battle extends DeltaGame{
         font.draw(batch, playerHp, 500, 700);
         font.draw(batch, enemyHp, 600, 700);
 
-        batch.draw(player);
+        //batch.draw(player);
 
         batch.end();
 

@@ -46,9 +46,9 @@ public class BattlePlayer extends Player implements BattlingCharacters {
     }
 
     @Override
-    public int useSkill() {
+    public void useSkill() {
         skillCooldown = 3;
-        return skillAttack;
+        //return skillAttack;
     }
 
     @Override

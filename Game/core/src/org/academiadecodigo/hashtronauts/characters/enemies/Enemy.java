@@ -8,6 +8,10 @@ public abstract class Enemy implements BattlingCharacters {
     private boolean defending = false;
     private boolean dead = false;
 
+    public int getHealth() {
+        return health;
+    }
+
     public void setHealth(int health) {
         this.health = health;
     }
