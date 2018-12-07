@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import org.academiadecodigo.hashtronauts.characters.player.PlatformPlayer;
 import org.academiadecodigo.hashtronauts.levels.gameObjects.ExitPoint;
 import org.academiadecodigo.hashtronauts.levels.gameObjects.GameObject;
+import org.academiadecodigo.hashtronauts.levels.gameObjects.Platform;
 import org.academiadecodigo.hashtronauts.levels.platformLevels.PlatformLevel;
 import org.academiadecodigo.hashtronauts.levels.platformLevels.levels.Platform1;
 import org.academiadecodigo.hashtronauts.levels.platformLevels.levels.Platform2;
@@ -23,8 +24,11 @@ public class DeltaGame extends Game {
     private PlatformLevel level3;
 
     private PlatformPlayer[] character;
-    
+
     private boolean position = false;
+    private boolean finished1 = false;
+    private boolean finished2 = false;
+    private boolean finished3 = false;
 
     private int currentLevel;
 
@@ -74,7 +78,7 @@ public class DeltaGame extends Game {
 
         batch.begin();
 
-        switch (currentLevel) {
+       /* switch (currentLevel) {
             case 1:
                 renderLevel1();
                 break;
@@ -84,18 +88,15 @@ public class DeltaGame extends Game {
             case 3:
                 renderLevel3();
                 break;
-        }
-
-        /*if (finished1) {
-            renderLevel2();
-        } else {
-            renderLevel1();
-        }
+        }*/
 
         if (finished2) {
-
             renderLevel3();
-        }*/
+        } else if(finished1) {
+            renderLevel2();
+        }else{
+            renderLevel1();
+        }
 
 
         batch.end();
@@ -116,7 +117,10 @@ public class DeltaGame extends Game {
             for (PlatformPlayer character : character) {
                 if (character.getRectangle().overlaps(object.getRectangle())) {
                     if (object instanceof ExitPoint) {
+                        position = false; // this needs to be false if you want to reset on next level
                         currentLevel++;
+                        finished1 = true;
+
                     }
                     character.getRectangle().y = object.getRectangle().y + object.getRectangle().height;
                     character.setFalling(false);
@@ -125,195 +129,132 @@ public class DeltaGame extends Game {
 
         }
 
+        for (PlatformPlayer character : character) {
+            batch.draw(character.getTexture(), character.getPosX(), character.getPosY());
 
-        batch.draw(character[0].getTexture(), character[0].getPosX(), character[0].getPosY());
+            if (character.isJumping()) {
+                if (TimeUtils.nanoTime() - character.getLastJumpTime() < 250000000) {
+                    character.setPosY((int) (character.getPosY() + ((Configurations.PLAYER_JUMP - character.getDelay() * 20) * Gdx.graphics.getDeltaTime())));
+                }
 
-        if (character[0].isJumping()) {
-            if (TimeUtils.nanoTime() - character[0].getLastJumpTime() < 250000000) {
-                character[0].setPosY((int) (character[0].getPosY() + ((Configurations.PLAYER_JUMP - character[0].getDelay() * 10) * Gdx.graphics.getDeltaTime())));
+                if (TimeUtils.nanoTime() - character.getLastJumpTime() > 300000000) {
+                    character.stopJump();
+                }
+            } else {
+                character.setPosY((int) (character.getPosY() - (Configurations.PLAYER_FALL * Gdx.graphics.getDeltaTime())));
             }
 
-            if (TimeUtils.nanoTime() - character[0].getLastJumpTime() > 300000000) {
-                character[0].stopJump();
+            character.move();
 
+            //if player is not jumping, player is allowed to jump
+            if (!character.isFalling()) {
+                character.jump();
             }
-        } else {
-
-            character[0].setPosY((int) (character[0].getPosY() - (Configurations.PLAYER_FALL * Gdx.graphics.getDeltaTime())));
-
         }
-
-        character[0].move();
-
-        //if player is not jumping, player is allowed to jump
-        if (!character[0].isFalling()) {
-            character[0].jump();
-        }
-
-
     }
 
 
     public void renderLevel2() {
-
-        if (character[0].getRectangle().getX() == character[1].getRectangle().getX() &&
-                character[0].getRectangle().getY() == character[1].getRectangle().getY()) {
-
-            character[1].getRectangle().setX(character[0].getRectangle().getX());
+        for(PlatformPlayer character : character){
+            if(!position){
+                character.getRectangle().setY(Configurations.GROUND_LEVEL);
+                character.getRectangle().setX(2);
+            }
         }
+        position = true;
 
-        if (!position) {
-            character[0].getRectangle().setX(0);
-            character[0].getRectangle().setY(0);
-            character[1].getRectangle().setX(character[0].getRectangle().getX() - 40);
-            character[1].getRectangle().setY(0);
-
-            position = true;
-
-        }
-
-        for (GameObject object1 : ((Platform2) level2).getGameObjects()) {
-            batch.draw(object1.getTexture(), object1.getRectangle().x, object1.getRectangle().y);
+        for (GameObject object : ((Platform2) level2).getGameObjects()) {
+            batch.draw(object.getTexture(), object.getRectangle().x, object.getRectangle().y);
 
             //check if player landed (floor, or platform)
-            if (character[0].getRectangle().overlaps(object1.getRectangle()) && character[1].getRectangle().overlaps(object1.getRectangle())) {
-                if (object1 instanceof ExitPoint) {
-                    position = false; // this needs to be false if you want to reset on next level
-                    currentLevel++;
-                    System.out.println("End");
+            for (PlatformPlayer character : character) {
+                if (character.getRectangle().overlaps(object.getRectangle())) {
+                    if (object instanceof ExitPoint) {
+                        position = false; // this needs to be false if you want to reset on next level
+                        currentLevel++;
+                         finished2 = true;
+                    }
+                    character.getRectangle().y = object.getRectangle().y + object.getRectangle().height;
+                    character.setFalling(false);
                 }
-                character[0].getRectangle().y = object1.getRectangle().y + object1.getRectangle().height;
-                character[1].getRectangle().y = object1.getRectangle().y + object1.getRectangle().height;
-                character[0].setFalling(false);
-                character[1].setFalling(false);
-
             }
 
         }
 
-        batch.draw(character[0].getTexture(), character[0].getPosX(), character[0].getPosY());
-        batch.draw(character[1].getTexture(), character[1].getPosX(), character[1].getPosY());
+        for (PlatformPlayer character : character) {
 
-        if (character[0].isJumping() && character[1].isJumping()) {
-            if ((TimeUtils.nanoTime() - character[0].getLastJumpTime() < 250000000) &&
-                    (TimeUtils.nanoTime() - character[1].getLastJumpTime() < 250000000)) {
-                character[0].setPosY((int) (character[0].getPosY() + (Configurations.PLAYER_JUMP * Gdx.graphics.getDeltaTime())));
-                character[1].setPosY((int) (character[1].getPosY() + (Configurations.PLAYER_JUMP * Gdx.graphics.getDeltaTime())));
+            batch.draw(character.getTexture(), character.getPosX(), character.getPosY());
+
+            if (character.isJumping()) {
+                if (TimeUtils.nanoTime() - character.getLastJumpTime() < 250000000) {
+                    character.setPosY((int) (character.getPosY() + ((Configurations.PLAYER_JUMP - character.getDelay() * 20) * Gdx.graphics.getDeltaTime())));
+                }
+
+                if (TimeUtils.nanoTime() - character.getLastJumpTime() > 300000000) {
+                    character.stopJump();
+                }
+            } else {
+                character.setPosY((int) (character.getPosY() - (Configurations.PLAYER_FALL * Gdx.graphics.getDeltaTime())));
             }
 
-            if ((TimeUtils.nanoTime() - character[0].getLastJumpTime() > 300000000) &&
-                    (TimeUtils.nanoTime() - character[1].getLastJumpTime() > 300000000)) {
-                character[0].stopJump();
-                character[1].stopJump();
+            character.move();
 
-
+            //if player is not jumping, player is allowed to jump
+            if (!character.isFalling()) {
+                character.jump();
             }
-        } else {
-
-            character[0].setPosY((int) (character[0].getPosY() - (Configurations.PLAYER_FALL * Gdx.graphics.getDeltaTime())));
-            character[1].setPosY((int) (character[1].getPosY() - (Configurations.PLAYER_FALL * Gdx.graphics.getDeltaTime())));
-
         }
 
-        character[0].move();
-        character[1].move();
-
-
-        //if player is not jumping, player is allowed to jump
-        if (!character[0].isFalling() && !character[1].isFalling()) {
-            character[0].jump();
-            character[1].jump();
-        }
     }
 
     public void renderLevel3() {
-
-        if (character[0].getRectangle().getX() == character[1].getRectangle().getX() &&
-                character[0].getRectangle().getY() == character[1].getRectangle().getY() &&
-                character[0].getRectangle().getX() == character[2].getRectangle().getX() &&
-                character[0].getRectangle().getY() == character[2].getRectangle().getY()) {
-
-            character[1].getRectangle().setX(character[0].getRectangle().getX() - 30);
-            character[2].getRectangle().setX(character[0].getRectangle().getX() - 30);
+        for(PlatformPlayer character : character){
+            if(!position){
+                character.getRectangle().setY(Configurations.GROUND_LEVEL);
+                character.getRectangle().setX(2);
+            }
         }
+        position = true;
 
-
-        if (!position) {
-            character[0].getRectangle().setX(0);
-            character[0].getRectangle().setY(0);
-            character[1].getRectangle().setX(character[0].getRectangle().getX() - 30);
-            character[1].getRectangle().setY(0);
-            character[2].getRectangle().setX(character[0].getRectangle().getX() - 30);
-            character[2].getRectangle().setY(0);
-
-            position = true;
-
-        }
-
-        for (GameObject object1 : ((Platform3) level3).getGameObjects()) {
-            batch.draw(object1.getTexture(), object1.getRectangle().x, object1.getRectangle().y);
+        for (GameObject object : ((Platform3) level3).getGameObjects()) {
+            batch.draw(object.getTexture(), object.getRectangle().x, object.getRectangle().y);
 
             //check if player landed (floor, or platform)
-            if (character[0].getRectangle().overlaps(object1.getRectangle()) &&
-                    character[1].getRectangle().overlaps(object1.getRectangle()) &&
-                    character[2].getRectangle().overlaps(object1.getRectangle())) {
-                if (object1 instanceof ExitPoint) {
+            for (PlatformPlayer character : character) {
 
-                    System.out.println("End");
+                if (character.getRectangle().overlaps(object.getRectangle())) {
+                    if (object instanceof ExitPoint) {
+                        position = false; // this needs to be false if you want to reset on next level
+                        //currentLevel++;
+                        finished3 = true;
+                    }
+                    character.getRectangle().y = object.getRectangle().y + object.getRectangle().height;
+                    character.setFalling(false);
                 }
-                character[0].getRectangle().y = object1.getRectangle().y + object1.getRectangle().height;
-                character[0].setFalling(false);
-                character[1].getRectangle().y = object1.getRectangle().y + object1.getRectangle().height;
-                character[1].setFalling(false);
-                character[2].getRectangle().y = object1.getRectangle().y + object1.getRectangle().height;
-                character[2].setFalling(false);
-
             }
-
         }
 
-        batch.draw(character[0].getTexture(), character[0].getPosX(), character[0].getPosY());
-        batch.draw(character[1].getTexture(), character[1].getPosX(), character[1].getPosY());
-        batch.draw(character[2].getTexture(), character[2].getPosX(), character[2].getPosY());
+        for (PlatformPlayer character : character) {
+            batch.draw(character.getTexture(), character.getPosX(), character.getPosY());
 
-        if (character[0].isJumping() && character[1].isJumping() && character[2].isJumping()) {
-            if ((TimeUtils.nanoTime() - character[0].getLastJumpTime() < 250000000) &&
-                    (TimeUtils.nanoTime() - character[1].getLastJumpTime() < 250000000) &&
-                    (TimeUtils.nanoTime() - character[2].getLastJumpTime() < 250000000)) {
+            if (character.isJumping()) {
+                if (TimeUtils.nanoTime() - character.getLastJumpTime() < 250000000) {
+                    character.setPosY((int) (character.getPosY() + ((Configurations.PLAYER_JUMP - character.getDelay() * 20) * Gdx.graphics.getDeltaTime())));
+                }
 
-                character[0].setPosY((int) (character[0].getPosY() + (Configurations.PLAYER_JUMP * Gdx.graphics.getDeltaTime())));
-                character[1].setPosY((int) (character[1].getPosY() + (Configurations.PLAYER_JUMP * Gdx.graphics.getDeltaTime())));
-                character[2].setPosY((int) (character[2].getPosY() + (Configurations.PLAYER_JUMP * Gdx.graphics.getDeltaTime())));
+                if (TimeUtils.nanoTime() - character.getLastJumpTime() > 300000000) {
+                    character.stopJump();
+                }
+            } else {
+                character.setPosY((int) (character.getPosY() - (Configurations.PLAYER_FALL * Gdx.graphics.getDeltaTime())));
             }
 
-            if ((TimeUtils.nanoTime() - character[0].getLastJumpTime() > 300000000) &&
-                    (TimeUtils.nanoTime() - character[1].getLastJumpTime() > 300000000) &&
-                    (TimeUtils.nanoTime() - character[2].getLastJumpTime() > 300000000)) {
+            character.move();
 
-                character[0].stopJump();
-                character[1].stopJump();
-                character[2].stopJump();
-
+            //if player is not jumping, player is allowed to jump
+            if (!character.isFalling()) {
+                character.jump();
             }
-        } else {
-
-            character[0].setPosY((int) (character[0].getPosY() - (Configurations.PLAYER_FALL * Gdx.graphics.getDeltaTime())));
-            character[1].setPosY((int) (character[1].getPosY() - (Configurations.PLAYER_FALL * Gdx.graphics.getDeltaTime())));
-            character[2].setPosY((int) (character[2].getPosY() - (Configurations.PLAYER_FALL * Gdx.graphics.getDeltaTime())));
-
         }
-
-        character[0].move();
-        character[1].move();
-        character[2].move();
-
-
-        //if player is not jumping, player is allowed to jump
-        if (!character[0].isFalling() && !character[1].isFalling() && !character[2].isFalling()) {
-            character[0].jump();
-            character[1].jump();
-            character[2].jump();
-        }
-
     }
 }
