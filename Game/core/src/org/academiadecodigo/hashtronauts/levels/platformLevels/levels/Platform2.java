@@ -1,5 +1,6 @@
 package org.academiadecodigo.hashtronauts.levels.platformLevels.levels;
 
+import com.badlogic.gdx.graphics.Texture;
 import org.academiadecodigo.hashtronauts.Configurations;
 import org.academiadecodigo.hashtronauts.levels.gameObjects.GameObject;
 import org.academiadecodigo.hashtronauts.levels.gameObjects.GameObjectFactory;
@@ -9,7 +10,12 @@ import java.util.ArrayList;
 
 public class Platform2 extends PlatformLevel {
 
+    private Texture bg;
     private ArrayList<GameObject> gameObjects;
+
+    public Platform2(){
+        bg = new Texture("bg_temple.jpg");
+    }
 
     public void initLevelObjects(){
         gameObjects = new ArrayList<GameObject>();
@@ -45,5 +51,9 @@ public class Platform2 extends PlatformLevel {
 
     public ArrayList<GameObject> getGameObjects(){
         return gameObjects;
+    }
+
+    public Texture getBg() {
+        return bg;
     }
 }

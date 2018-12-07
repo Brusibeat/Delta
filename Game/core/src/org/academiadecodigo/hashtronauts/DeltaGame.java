@@ -9,7 +9,6 @@ import com.badlogic.gdx.utils.TimeUtils;
 import org.academiadecodigo.hashtronauts.characters.player.PlatformPlayer;
 import org.academiadecodigo.hashtronauts.levels.gameObjects.ExitPoint;
 import org.academiadecodigo.hashtronauts.levels.gameObjects.GameObject;
-import org.academiadecodigo.hashtronauts.levels.gameObjects.Platform;
 import org.academiadecodigo.hashtronauts.levels.platformLevels.PlatformLevel;
 import org.academiadecodigo.hashtronauts.levels.platformLevels.levels.Platform1;
 import org.academiadecodigo.hashtronauts.levels.platformLevels.levels.Platform2;
@@ -78,23 +77,11 @@ public class DeltaGame extends Game {
 
         batch.begin();
 
-       /* switch (currentLevel) {
-            case 1:
-                renderLevel1();
-                break;
-            case 2:
-                renderLevel2();
-                break;
-            case 3:
-                renderLevel3();
-                break;
-        }*/
-
         if (finished2) {
             renderLevel3();
-        } else if(finished1) {
+        } else if (finished1) {
             renderLevel2();
-        }else{
+        } else {
             renderLevel1();
         }
 
@@ -109,7 +96,7 @@ public class DeltaGame extends Game {
 
 
     public void renderLevel1() {
-
+        batch.draw(((Platform1) level1).getBg(), 0, 0);
         for (GameObject object : ((Platform1) level1).getGameObjects()) {
             batch.draw(object.getTexture(), object.getRectangle().x, object.getRectangle().y);
 
@@ -155,8 +142,9 @@ public class DeltaGame extends Game {
 
 
     public void renderLevel2() {
-        for(PlatformPlayer character : character){
-            if(!position){
+        batch.draw(((Platform2) level2).getBg(), 0, 0);
+        for (PlatformPlayer character : character) {
+            if (!position) {
                 character.getRectangle().setY(Configurations.GROUND_LEVEL);
                 character.getRectangle().setX(2);
             }
@@ -172,7 +160,7 @@ public class DeltaGame extends Game {
                     if (object instanceof ExitPoint) {
                         position = false; // this needs to be false if you want to reset on next level
                         currentLevel++;
-                         finished2 = true;
+                        finished2 = true;
                     }
                     character.getRectangle().y = object.getRectangle().y + object.getRectangle().height;
                     character.setFalling(false);
@@ -208,8 +196,9 @@ public class DeltaGame extends Game {
     }
 
     public void renderLevel3() {
-        for(PlatformPlayer character : character){
-            if(!position){
+        batch.draw(((Platform3) level3).getBg(), 0, 0);
+        for (PlatformPlayer character : character) {
+            if (!position) {
                 character.getRectangle().setY(Configurations.GROUND_LEVEL);
                 character.getRectangle().setX(2);
             }

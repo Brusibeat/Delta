@@ -19,14 +19,12 @@ public class PlatformPlayer extends Player {
     private int delay;
 
     public void initPlayer(int delay) {
-        //texture = new Texture("freddy.png");
         this.delay = delay;
         rectangle = new Rectangle();
         rectangle.x = 40 - delay * 10;
         rectangle.y = Configurations.GROUND_LEVEL;
         rectangle.width = Configurations.PLAYER_WIDTH;
         rectangle.height = 1;
-        texture = createTexture(Configurations.PLAYER_WIDTH, Configurations.PLAYER_HEIGHT);
     }
 
     public int getDelay() {
@@ -111,8 +109,8 @@ public class PlatformPlayer extends Player {
             rectangle.x = Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH;
         }
 
-        if (rectangle.y < 0) {
-            rectangle.y = 0;
+        if (rectangle.y < 0 + Configurations.GROUND_LEVEL) {
+            rectangle.y = 0 + Configurations.GROUND_LEVEL;
             isFalling = false;
         }
 
