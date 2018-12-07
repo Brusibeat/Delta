@@ -40,7 +40,7 @@ public class Platform1 extends PlatformLevel {
         gameObjects.add(GameObjectFactory.createPlatform(null, 1550, 850+ Configurations.GROUND_LEVEL, 100, 20));
 
 
-        gameObjects.add(GameObjectFactory.createExitPoint("freddy.png", 1750, 850+ Configurations.GROUND_LEVEL, 100,20 ));
+        gameObjects.add(GameObjectFactory.createExitPoint("portal.png", 1750, 850+ Configurations.GROUND_LEVEL, 100,20 ));
 
 
     }

@@ -2,6 +2,7 @@ package org.academiadecodigo.hashtronauts.characters.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,6 +18,7 @@ public class PlatformPlayer extends Player {
     private boolean isFalling = false;
     private long lastJumpTime;
     private int delay;
+    private Sound jump;
 
     public void initPlayer(int delay) {
         this.delay = delay;
@@ -25,6 +27,10 @@ public class PlatformPlayer extends Player {
         rectangle.y = Configurations.GROUND_LEVEL;
         rectangle.width = Configurations.PLAYER_WIDTH;
         rectangle.height = 1;
+    }
+
+    public void setJump(Sound jump) {
+        this.jump = jump;
     }
 
     public int getDelay() {
@@ -87,6 +93,9 @@ public class PlatformPlayer extends Player {
     public void jump() {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !isJumping) {
+            if (jump != null) {
+                jump.play();
+            }
             isJumping = true;
             lastJumpTime = TimeUtils.nanoTime();
         }

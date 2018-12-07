@@ -2,6 +2,8 @@ package org.academiadecodigo.hashtronauts;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -30,6 +32,9 @@ public class DeltaGame extends Game {
     private boolean finished3 = false;
 
     private int currentLevel;
+
+    private Music bg_music;
+    private Sound jump;
 
     @Override
     public void create() {
@@ -62,6 +67,14 @@ public class DeltaGame extends Game {
         level3.levelInit();
 
         currentLevel = 1;
+
+        jump = Gdx.audio.newSound(Gdx.files.internal("jump.mp3"));
+
+        bg_music = Gdx.audio.newMusic(Gdx.files.internal("bg_music.mp3"));
+        bg_music.setLooping(true);
+        bg_music.play();
+
+        character[3].setJump(jump);
 
     }
 
