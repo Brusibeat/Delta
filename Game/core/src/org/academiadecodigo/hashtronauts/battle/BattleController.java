@@ -2,64 +2,40 @@ package org.academiadecodigo.hashtronauts.battle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import org.academiadecodigo.hashtronauts.levels.BattleLevel;
+import com.badlogic.gdx.Screen;
 
 public class BattleController {
-    BattleLevel battle;
+    Screen battle;
 
     //Validation for battle over
     private boolean isOver;
 
-    public BattleController(BattleLevel battle){
+    public BattleController(Screen battle){
         this.battle = battle;
     }
 
-    public void battleStart(){
-        isOver = false;
-
-        while(!isOver){
-
-            battle.showPlayerActions();
-
-            playerTurn();
-
-            enemyTurn();
-
-            if(battle.getEnemyModel().getHealth() <= 0){
-                isOver = true;
-            }
-        }
-
-    }
 
     public void playerTurn(){
-        boolean choice = false;
+        //Attack option
+        switch(getPlayerInput()){
+            case 'A': battle.getEnemyModel().getHit( battle.getPlayerModel().attack() );
 
-        while(!choice){
-            //Attack option
-            switch(getPlayerInput()){
-                case 'A': battle.getEnemyModel().getHit( battle.getPlayerModel().attack() );
-                        choice = true;
-                        break;
-                case 'D': battle.getPlayerModel().defend();
-                    choice = true;
                     break;
-                case '1': if(battle.getPlayerModel().getSkillCooldown() == 0){
-                                battle.getEnemyModel().getHit( battle.getPlayerModel().useSkill() );
-                                choice = true;
-                            }
-                    break;
-                case '2':
-                    choice = true;
-                    break;
-                case '3':
-                    choice = true;
-                    break;
-                case '4':
-                    choice = true;
-                    break;
-            }
+            case 'D': battle.getPlayerModel().defend();
+                break;
+            case '1': if(battle.getPlayerModel().getSkillCooldown() == 0){
+                            battle.getEnemyModel().getHit( battle.getPlayerModel().useSkill() );
+
+                        }
+                break;
+            case '2':
+                break;
+            case '3':
+                break;
+            case '4':
+                break;
         }
+
     }
 
     public void enemyTurn(){
