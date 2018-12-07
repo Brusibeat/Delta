@@ -105,7 +105,7 @@ public class DeltaGame extends Game {
 
             if (character.isJumping()) {
                 if (TimeUtils.nanoTime() - character.getLastJumpTime() < 250000000) {
-                    character.setPosY((int) (character.getPosY() + (Configurations.PLAYER_JUMP * Gdx.graphics.getDeltaTime())));
+                    character.setPosY((int) (character.getPosY() + ((Configurations.PLAYER_JUMP - character.getDelay() * 10) * Gdx.graphics.getDeltaTime())));
                 }
 
                 if (TimeUtils.nanoTime() - character.getLastJumpTime() > 300000000) {

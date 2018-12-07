@@ -29,6 +29,10 @@ public class PlatformPlayer extends Player {
         texture = createTexture(Configurations.PLAYER_WIDTH, Configurations.PLAYER_HEIGHT);
     }
 
+    public int getDelay() {
+        return delay;
+    }
+
     public Rectangle getRectangle() {
         return rectangle;
     }
