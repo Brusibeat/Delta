@@ -2,6 +2,7 @@ package org.academiadecodigo.hashtronauts.characters.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,15 +17,24 @@ public class PlatformPlayer extends Player {
     private boolean isJumping = false;
     private boolean isFalling = false;
     private long lastJumpTime;
+    private int delay;
+    private Sound jump;
 
-    public void initPlayer() {
-        //texture = new Texture("freddy.png");
+    public void initPlayer(int delay) {
+        this.delay = delay;
         rectangle = new Rectangle();
-        rectangle.x = 0;
-        rectangle.y = 0;
+        rectangle.x = 40 - delay * 10;
+        rectangle.y = Configurations.GROUND_LEVEL;
         rectangle.width = Configurations.PLAYER_WIDTH;
         rectangle.height = 1;
-        texture = createTexture(Configurations.PLAYER_WIDTH, Configurations.PLAYER_HEIGHT);
+    }
+
+    public void setJump(Sound jump) {
+        this.jump = jump;
+    }
+
+    public int getDelay() {
+        return delay;
     }
 
     public Rectangle getRectangle() {
@@ -83,15 +93,15 @@ public class PlatformPlayer extends Player {
     public void jump() {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !isJumping) {
-
+            if (jump != null) {
+                jump.play();
+            }
             isJumping = true;
             lastJumpTime = TimeUtils.nanoTime();
         }
     }
 
     public void move() {
-
-
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             rectangle.x -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
         }
@@ -100,16 +110,16 @@ public class PlatformPlayer extends Player {
             rectangle.x += Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
         }
 
-        if (rectangle.x < 0) {
-            rectangle.x = 0;
+        if (rectangle.x < (delay * 10)) {
+            rectangle.x = (delay * 10);
         }
 
         if (rectangle.x > Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH) {
             rectangle.x = Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH;
         }
 
-        if (rectangle.y < 0) {
-            rectangle.y = 0;
+        if (rectangle.y < 0 + Configurations.GROUND_LEVEL) {
+            rectangle.y = 0 + Configurations.GROUND_LEVEL;
             isFalling = false;
         }
 
@@ -121,7 +131,19 @@ public class PlatformPlayer extends Player {
 
     private Texture createTexture(int width, int height) {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.BLUE);
+        if (delay == 0) {
+            pixmap.setColor(Color.RED);
+        }
+        if (delay == 1) {
+            pixmap.setColor(Color.BLACK);
+        }
+        if (delay == 2) {
+            pixmap.setColor(Color.GRAY);
+        }
+        if (delay == 3) {
+            pixmap.setColor(Color.LIGHT_GRAY);
+        }
+
         pixmap.fill();
         return new Texture(pixmap);
     }

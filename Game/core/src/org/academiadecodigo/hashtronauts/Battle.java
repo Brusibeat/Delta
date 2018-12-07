@@ -1,6 +1,8 @@
 package org.academiadecodigo.hashtronauts;
 
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,8 +11,10 @@ import org.academiadecodigo.hashtronauts.battle.PlayerAction;
 import org.academiadecodigo.hashtronauts.characters.enemies.Enemy;
 import org.academiadecodigo.hashtronauts.characters.enemies.EnemyA;
 import org.academiadecodigo.hashtronauts.characters.player.BattlePlayer;
+import org.academiadecodigo.hashtronauts.characters.player.PlatformPlayer;
 
 public class Battle {
+
     //Models
     private Enemy enemyModel;
     private BattlePlayer playerModel;
@@ -26,6 +30,8 @@ public class Battle {
     private Texture playerHp;
     private Texture enemyHp;
 
+    private Texture bg;
+
     private int playerBar = 200;
     private int enemyBar = 200;
     //user inputs
@@ -37,6 +43,18 @@ public class Battle {
     private boolean isOver;
     private boolean isPlayerTurn = true;
 
+    public void setPlayerBar(int playerBar) {
+        this.playerBar = playerBar;
+    }
+
+    public void setEnemyBar(int enemyBar) {
+        this.enemyBar = enemyBar;
+    }
+
+    public Texture getBg() {
+        return bg;
+    }
+
     public void setOver(boolean over) {
         isOver = over;
     }
@@ -45,7 +63,7 @@ public class Battle {
         return playerBar;
     }
 
-    public int setPlayerBar(int dmg) {
+    public int setPlayerDmg(int dmg) {
         return this.playerBar -= dmg;
     }
 
@@ -53,7 +71,7 @@ public class Battle {
         return enemyBar;
     }
 
-    public int setEnemyBar(int dmg) {
+    public int setEnemyDmg(int dmg) {
         return this.enemyBar -= dmg;
     }
 
@@ -62,11 +80,12 @@ public class Battle {
         enemyModel = new EnemyA(200);
         playerModel = new BattlePlayer(200);
 
-        player = createTexture( 50, 150, Color.BLUE);
-        guitar = createTexture(50,150, Color.BROWN);
-        bass = createTexture(50,150, Color.CYAN);
-        drums = createTexture(50,150, Color.YELLOW);
-        enemy = createTexture(50, 150, Color.RED);
+        player = new Texture("1.png");
+        guitar = new Texture("2.png");
+        bass = new Texture("4.png");
+        drums = new Texture("3.png");
+        enemy = new Texture("enemy.png");
+        bg = new Texture("bg_boss.jpg");
 
         //Define health values in text
         playerHp = createTexture(200, 40, Color.BLUE);

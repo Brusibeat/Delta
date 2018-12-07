@@ -1,12 +1,12 @@
 package org.academiadecodigo.hashtronauts.battle;
 
 public enum PlayerAction {
-    ATTACK("[A] -> Attack!", 300, 600),
-    DEFEND("[D] -> Defend!", 300, 550),
-    YOUR_SKILL("[1] -> Your Skill!", 300, 500),
-    BRIAN_SKILL("[2] -> !", 150, 800),
-    JOHN_SKILL("[3] -> !", 100, 500),
-    ROGER_SKILL("[4] -> !", 150, 200);
+    ATTACK("[A] -> Attack!", 470, 590),
+    DEFEND("[D] -> Defend!", 470, 560),
+    YOUR_SKILL("[Q] -> Friends Will Be Friends!", 470, 530),
+    BRIAN_SKILL("[W] -> Brighton Rock!", 220, 720),
+    JOHN_SKILL("[E] -> Who Wants To Live Forever!", 170, 400),
+    ROGER_SKILL("[R] -> Bohemian Rhapsody!", 220, 220);
 
     private String message;
     private int X;

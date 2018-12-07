@@ -2,6 +2,7 @@ package org.academiadecodigo.hashtronauts.battle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import org.academiadecodigo.hashtronauts.Battle;
 import org.academiadecodigo.hashtronauts.characters.enemies.Enemy;
 import org.academiadecodigo.hashtronauts.characters.enemies.EnemyA;
@@ -16,7 +17,13 @@ public class BattleController {
     private Battle battle;
     private double accuracy;
 
+    private Sound attack;
+    private Sound enemyAttack;
+
     public void create() {
+        attack = Gdx.audio.newSound(Gdx.files.internal("attack.wav"));
+        enemyAttack = Gdx.audio.newSound(Gdx.files.internal("enemy.mp3"));
+
         enemy = new EnemyA(10);
         player = new BattlePlayer(50);
     }
@@ -25,6 +32,7 @@ public class BattleController {
         //Attack option
         switch (getPlayerInput()) {
             case 'A':
+                attack.play();
                 enemy.getHit(player.attack());
                 System.out.println("Player Attack");
                 return true;
@@ -34,12 +42,14 @@ public class BattleController {
                 return true;
             case 'Q':
                 if (player.getSkillCooldown() == 0) {
+                    attack.play();
                     enemy.getHit(player.useSkill());
                     System.out.println("Player Skill");
                     return true;
                 }
             case 'W':
                 if (player.getSkillCooldown() == 0) {
+                    attack.play();
                     enemy.getHit(player.useBassSkill());
                     System.out.println("Player Skill");
                     return true;
@@ -47,6 +57,7 @@ public class BattleController {
                 }
             case 'E':
                 if (player.getSkillCooldown() == 0) {
+                    attack.play();
                     enemy.getHit(player.useDrumSkill());
                     System.out.println("Player Skill");
                     return true;
@@ -54,6 +65,7 @@ public class BattleController {
                 }
             case 'R':
                 if (player.getSkillCooldown() == 0) {
+                    attack.play();
                     enemy.getHit(player.useGuitarSkill());
                     System.out.println("Player Skill");
                     return true;
@@ -69,6 +81,7 @@ public class BattleController {
 
         if (random < 0.5) {
             if (isSuccessful()) {
+                enemyAttack.play();
                 player.getHit(enemy.attack());
                 System.out.println("Enemy Attack");
                 return true;
@@ -83,6 +96,7 @@ public class BattleController {
 
         if (random < 1) {
             if (isSuccessful()) {
+                enemyAttack.play();
                 player.getHit(enemy.useSkill());
                 System.out.println("Enemy Skill");
                 return true;
