@@ -105,6 +105,7 @@ public class PlatformPlayer extends Player {
 
         if (rectangle.y < 0) {
             rectangle.y = 0;
+            isFalling = false;
         }
 
         if (rectangle.y > Configurations.WINDOW_HEIGHT - Configurations.PLAYER_HEIGHT) {

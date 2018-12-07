@@ -10,10 +10,10 @@ public abstract class GameObject {
     private Texture texture;
     private Rectangle rectangle;
 
-    public GameObject(String texture, int posX, int posY, int width, int height){
-        if(texture == null) {
+    public GameObject(String texture, int posX, int posY, int width, int height) {
+        if (texture == null) {
             this.texture = createTexture(posX, posY, width, height);
-        }else{
+        } else {
             this.texture = new Texture(texture);
         }
 

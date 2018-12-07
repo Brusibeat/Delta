@@ -46,12 +46,14 @@ public class DeltaGame extends ApplicationAdapter {
         batch.begin();
 
         for (GameObject object : ((Platform1) level).getGameObjects()) {
-            batch.draw(object.getTexture(), object.getRectangle().x, object.getRectangle().y);
+            batch.draw(object.getTexture(), object.getRectangle().x + (object.getRectangle().width/2), object.getRectangle().y);
 
             //check if player landed (floor, or platform)
-            if (player.getPosY() == 0 || player.getRectangle().overlaps(object.getRectangle())) {
+            if (player.getRectangle().overlaps(object.getRectangle())) {
+                player.getRectangle().y = object.getRectangle().y + object.getRectangle().height;
                 player.setFalling(false);
             }
+
         }
 
         batch.draw(player.getTexture(), player.getPosX(), player.getPosY());
