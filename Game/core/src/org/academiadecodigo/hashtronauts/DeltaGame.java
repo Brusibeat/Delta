@@ -44,6 +44,7 @@ public class DeltaGame extends Game {
     private Music bg_music;
     private Music enemy_music;
     private Sound jump;
+    private ExitPoint exitPoint;
 
     @Override
     public void create() {
@@ -132,17 +133,14 @@ public class DeltaGame extends Game {
     public void renderLevel1() {
         batch.draw(((Platform1) level1).getBg(), 0, 0);
         for (GameObject object : ((Platform1) level1).getGameObjects()) {
+            if (object instanceof ExitPoint) {
+                exitPoint = (ExitPoint) object;
+            }
             batch.draw(object.getTexture(), object.getRectangle().x, object.getRectangle().y);
 
             //check if player landed (floor, or platform)
             for (PlatformPlayer character : character) {
                 if (character.getRectangle().overlaps(object.getRectangle())) {
-                    if (object instanceof ExitPoint) {
-                        position = false; // this needs to be false if you want to reset on next level
-                        currentLevel++;
-                        finished1 = true;
-
-                    }
                     character.getRectangle().y = object.getRectangle().y + object.getRectangle().height;
                     character.setFalling(false);
                 }
@@ -171,6 +169,15 @@ public class DeltaGame extends Game {
             if (!character.isFalling()) {
                 character.jump();
             }
+        }
+
+        if ((character[0].getRectangle().overlaps(exitPoint.getRectangle())) &&
+                (character[1].getRectangle().overlaps(exitPoint.getRectangle())) &&
+                (character[2].getRectangle().overlaps(exitPoint.getRectangle())) &&
+                (character[3].getRectangle().overlaps(exitPoint.getRectangle()))) {
+            position = false; // this needs to be false if you want to reset on next level
+            currentLevel++;
+            finished1 = true;
         }
     }
 
@@ -186,25 +193,22 @@ public class DeltaGame extends Game {
         position = true;
 
         for (GameObject object : ((Platform2) level2).getGameObjects()) {
+            if (object instanceof ExitPoint){
+                exitPoint = (ExitPoint) object;
+            }
             batch.draw(object.getTexture(), object.getRectangle().x, object.getRectangle().y);
 
             //check if player landed (floor, or platform)
             for (PlatformPlayer character : character) {
+
                 if (character.getRectangle().overlaps(object.getRectangle())) {
-                    if (object instanceof ExitPoint) {
-                        position = false; // this needs to be false if you want to reset on next level
-                        currentLevel++;
-                        finished2 = true;
-                    }
                     character.getRectangle().y = object.getRectangle().y + object.getRectangle().height;
                     character.setFalling(false);
                 }
             }
-
         }
 
         for (PlatformPlayer character : character) {
-
             batch.draw(character.getTexture(), character.getPosX(), character.getPosY());
 
             if (character.isJumping()) {
@@ -226,7 +230,14 @@ public class DeltaGame extends Game {
                 character.jump();
             }
         }
-
+        if ((character[0].getRectangle().overlaps(exitPoint.getRectangle())) &&
+                (character[1].getRectangle().overlaps(exitPoint.getRectangle())) &&
+                (character[2].getRectangle().overlaps(exitPoint.getRectangle())) &&
+                (character[3].getRectangle().overlaps(exitPoint.getRectangle()))) {
+            position = false; // this needs to be false if you want to reset on next level
+            currentLevel++;
+            finished2 = true;
+        }
     }
 
     public void renderLevel3() {
@@ -240,17 +251,15 @@ public class DeltaGame extends Game {
         position = true;
 
         for (GameObject object : ((Platform3) level3).getGameObjects()) {
+            if (object instanceof ExitPoint){
+                exitPoint = (ExitPoint) object;
+            }
             batch.draw(object.getTexture(), object.getRectangle().x, object.getRectangle().y);
 
             //check if player landed (floor, or platform)
             for (PlatformPlayer character : character) {
 
                 if (character.getRectangle().overlaps(object.getRectangle())) {
-                    if (object instanceof ExitPoint) {
-                        position = false; // this needs to be false if you want to reset on next level
-                        //currentLevel++;
-                        finished3 = true;
-                    }
                     character.getRectangle().y = object.getRectangle().y + object.getRectangle().height;
                     character.setFalling(false);
                 }
@@ -278,6 +287,14 @@ public class DeltaGame extends Game {
             if (!character.isFalling()) {
                 character.jump();
             }
+        }
+        if ((character[0].getRectangle().overlaps(exitPoint.getRectangle())) &&
+                (character[1].getRectangle().overlaps(exitPoint.getRectangle())) &&
+                (character[2].getRectangle().overlaps(exitPoint.getRectangle())) &&
+                (character[3].getRectangle().overlaps(exitPoint.getRectangle()))) {
+            position = false; // this needs to be false if you want to reset on next level
+            currentLevel++;
+            finished3 = true;
         }
     }
 
