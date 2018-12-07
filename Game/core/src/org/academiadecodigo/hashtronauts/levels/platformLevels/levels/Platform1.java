@@ -13,7 +13,8 @@ public class Platform1 extends PlatformLevel {
     public void initLevelObjects(){
         gameObjects = new ArrayList<GameObject>();
 
-        gameObjects.add(GameObjectFactory.createPlatform(null, 50, 50, 100, 50));
+        gameObjects.add(GameObjectFactory.createPlatform(null, 50, 50, 100, 20));
+        gameObjects.add(GameObjectFactory.createPlatform(null, 250, 150, 100, 20));
     }
 
     public ArrayList<GameObject> getGameObjects(){

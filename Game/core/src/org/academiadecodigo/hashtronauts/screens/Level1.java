@@ -1,46 +1,53 @@
-package org.academiadecodigo.hashtronauts;
+package org.academiadecodigo.hashtronauts.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
+import org.academiadecodigo.hashtronauts.Configurations;
+import org.academiadecodigo.hashtronauts.DeltaGame;
 import org.academiadecodigo.hashtronauts.characters.player.PlatformPlayer;
 import org.academiadecodigo.hashtronauts.levels.gameObjects.GameObject;
 import org.academiadecodigo.hashtronauts.levels.platformLevels.PlatformLevel;
 import org.academiadecodigo.hashtronauts.levels.platformLevels.levels.Platform1;
-import org.academiadecodigo.hashtronauts.screens.ScreenManager;
 
-public class DeltaGame extends Game {
-    public SpriteBatch batch;
+public class Level1 extends AbstractScreen {
 
-    private ScreenManager screenManager;
+    private OrthographicCamera camera;
 
-    @Override
-    public void create() {
-        batch = new SpriteBatch();
+    private PlatformLevel level;
+    private PlatformPlayer player;
 
-        screenManager = new ScreenManager(this);
+    public Level1(final DeltaGame game){
+        super(game);
 
-        /*level = new Level1();
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Configurations.WINDOW_WIDTH, Configurations.WINDOW_HEIGHT);
 
-        ((Level1) level).initLevelObjects();
+        game.batch.setProjectionMatrix(camera.combined);
+
+        level = new Platform1();
+
+        ((Platform1) level).initLevelObjects();
         level.levelInit();
 
         player = level.getPlayer();
 
-        player.setFalling(false);*/
+        player.setFalling(false);
 
+    }
+    
+    @Override
+    public void update(float delta) {
+        stage.act(delta);
     }
 
     @Override
-    public void render() {
-        super.render();
+    public void render(float delta){
+        super.render(delta);
+        stage.draw();
 
-        batch.begin();
-
-        /*for (GameObject object : ((Level1) level).getGameObjects()) {
-            batch.draw(object.getTexture(), object.getRectangle().x, object.getRectangle().y);
+        for (GameObject object : ((Platform1) level).getGameObjects()) {
+            game.batch.draw(object.getTexture(), object.getRectangle().x, object.getRectangle().y);
 
             //check if player landed (floor, or platform)
             if (player.getRectangle().overlaps(object.getRectangle())){
@@ -49,7 +56,7 @@ public class DeltaGame extends Game {
             }
         }
 
-        batch.draw(player.getTexture(), player.getPosX(), player.getPosY());
+        game.batch.draw(player.getTexture(), player.getPosX(), player.getPosY());
 
         if (player.isJumping()) {
             if (TimeUtils.nanoTime() - player.getLastJumpTime() < 250000000) {
@@ -71,18 +78,28 @@ public class DeltaGame extends Game {
         //if player is not jumping, player is allowed to jump
         if (!player.isFalling()) {
             player.jump();
-        }*/
+        }
 
-        batch.end();
+        game.batch.end();
     }
 
     @Override
-    public void dispose() {
-        super.dispose();
-        /*batch.dispose();
-        player.getTexture().dispose();
-        for (GameObject object : ((Level1) level).getGameObjects()){
-            object.getTexture().dispose();
-        }*/
+    public void show() {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
     }
 }

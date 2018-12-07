@@ -2,6 +2,8 @@ package org.academiadecodigo.hashtronauts.characters.player;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -16,10 +18,13 @@ public class PlatformPlayer extends Player {
     private long lastJumpTime;
 
     public void initPlayer() {
-        texture = new Texture("freddy.png");
+        //texture = new Texture("freddy.png");
         rectangle = new Rectangle();
         rectangle.x = 0;
         rectangle.y = 0;
+        rectangle.width = Configurations.PLAYER_WIDTH;
+        rectangle.height = 1;
+        texture = createTexture(Configurations.PLAYER_WIDTH, Configurations.PLAYER_HEIGHT);
     }
 
     public Rectangle getRectangle() {
@@ -59,7 +64,7 @@ public class PlatformPlayer extends Player {
         return rectangle.y;
     }
 
-    public void setPosY(int posY) {
+    public void setPosY(float posY) {
         rectangle.y = posY;
     }
 
@@ -78,7 +83,6 @@ public class PlatformPlayer extends Player {
     public void jump() {
 
         if ( Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !isJumping ) {
-
             isJumping = true;
             lastJumpTime = TimeUtils.nanoTime();
         }
@@ -105,6 +109,7 @@ public class PlatformPlayer extends Player {
 
         if (rectangle.y < 0) {
             rectangle.y = 0;
+            isFalling = false;
         }
 
         if (rectangle.y > Configurations.WINDOW_HEIGHT - Configurations.PLAYER_HEIGHT) {
@@ -115,5 +120,13 @@ public class PlatformPlayer extends Player {
 
     private void useSkill() {
 
+    }
+
+    //PARA TESTES
+    private Texture createTexture(int width, int height) {
+        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.RED);
+        pixmap.fill();
+        return new Texture(pixmap);
     }
 }
