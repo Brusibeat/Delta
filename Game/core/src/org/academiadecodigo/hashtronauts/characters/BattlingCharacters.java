@@ -6,7 +6,7 @@ public interface BattlingCharacters {
 
     boolean defend();
 
-    int useSkill();
+    void useSkill();
 
     boolean isDead();
 
