@@ -17,17 +17,19 @@ public class PlatformPlayer extends Player {
     private boolean isFalling = false;
     private long lastJumpTime;
     private int delay;
+    private int initialX;
 
     public void initPlayer(int delay) {
-        //texture = new Texture("freddy.png");
         this.delay = delay;
+        this.initialX = delay * 10;
         rectangle = new Rectangle();
-        rectangle.x = 40 - delay * 10;
-        rectangle.y = 0;
+        rectangle.x = 50 - delay * 10;
+        rectangle.y = Configurations.GROUND_LEVEL;
         rectangle.width = Configurations.PLAYER_WIDTH;
         rectangle.height = 1;
-        texture = createTexture(Configurations.PLAYER_WIDTH, Configurations.PLAYER_HEIGHT);
+        //texture = createTexture(Configurations.PLAYER_WIDTH, Configurations.PLAYER_HEIGHT);
     }
+
 
     public int getDelay() {
         return delay;
@@ -95,6 +97,7 @@ public class PlatformPlayer extends Player {
     }
 
     public void move() {
+
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             rectangle.x -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
         }
@@ -103,16 +106,16 @@ public class PlatformPlayer extends Player {
             rectangle.x += Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
         }
 
-        if (rectangle.x < 0) {
-            rectangle.x = 0;
+        if (rectangle.x < (delay * 10)) {
+            rectangle.x = (delay * 10);
         }
 
-        if (rectangle.x > Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH) {
-            rectangle.x = Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH;
+        if (rectangle.x > Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH - (delay * 10)) {
+            rectangle.x = Configurations.WINDOW_WIDTH - Configurations.PLAYER_WIDTH - (delay * 10);
         }
 
-        if (rectangle.y < 0) {
-            rectangle.y = 0;
+        if (rectangle.y < Configurations.GROUND_LEVEL) {
+            rectangle.y = Configurations.GROUND_LEVEL;
             isFalling = false;
         }
 
@@ -139,6 +142,11 @@ public class PlatformPlayer extends Player {
 
         pixmap.fill();
         return new Texture(pixmap);
+    }
+
+    public void goToInitial(){
+        rectangle.x = initialX;
+        rectangle.y = Configurations.GROUND_LEVEL;
     }
 
     private void useSkill() {
