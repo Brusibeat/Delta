@@ -5,22 +5,41 @@ import org.academiadecodigo.hashtronauts.characters.BattlingCharacters;
 public abstract class Enemy implements BattlingCharacters {
 
     private int health;
+    private boolean defending = false;
     private boolean dead = false;
 
-    @Override
-    public void attack() {
+    public int getHealth() {
+        return health;
+    }
 
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void getHit(int dmg) {
+        health -= dmg;
+    }
+
+    public boolean isDefending() {
+        return defending;
+    }
+
+    public void setDefending() {
+        this.defending = false;
     }
 
     @Override
-    public void defend() {
-
+    public int attack() {
+        return 0;
     }
 
     @Override
-    public void useSkill() {
-
+    public boolean defend() {
+        return true;
     }
+
+    @Override
+    public void useSkill() {}
 
     @Override
     public boolean isDead() {

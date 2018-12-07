@@ -16,11 +16,13 @@ public class PlatformPlayer extends Player {
     private boolean isJumping = false;
     private boolean isFalling = false;
     private long lastJumpTime;
+    private int delay;
 
-    public void initPlayer() {
+    public void initPlayer(int delay) {
         //texture = new Texture("freddy.png");
+        this.delay = delay;
         rectangle = new Rectangle();
-        rectangle.x = 0;
+        rectangle.x = 40 - delay * 10;
         rectangle.y = 0;
         rectangle.width = Configurations.PLAYER_WIDTH;
         rectangle.height = 1;
@@ -64,7 +66,7 @@ public class PlatformPlayer extends Player {
         return rectangle.y;
     }
 
-    public void setPosY(float posY) {
+    public void setPosY(int posY) {
         rectangle.y = posY;
     }
 
@@ -82,15 +84,13 @@ public class PlatformPlayer extends Player {
 
     public void jump() {
 
-        if ( Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !isJumping ) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !isJumping) {
             isJumping = true;
             lastJumpTime = TimeUtils.nanoTime();
         }
     }
 
     public void move() {
-
-
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             rectangle.x -= Configurations.PLAYER_FLOW * Gdx.graphics.getDeltaTime();
         }
@@ -118,15 +118,28 @@ public class PlatformPlayer extends Player {
 
     }
 
+    private Texture createTexture(int width, int height) {
+        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+        if (delay == 0) {
+            pixmap.setColor(Color.RED);
+        }
+        if (delay == 1) {
+            pixmap.setColor(Color.BLACK);
+        }
+        if (delay == 2) {
+            pixmap.setColor(Color.GRAY);
+        }
+        if (delay == 3) {
+            pixmap.setColor(Color.LIGHT_GRAY);
+        }
+
+        pixmap.fill();
+        return new Texture(pixmap);
+    }
+
     private void useSkill() {
 
     }
 
-    //PARA TESTES
-    private Texture createTexture(int width, int height) {
-        Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.RED);
-        pixmap.fill();
-        return new Texture(pixmap);
-    }
+
 }

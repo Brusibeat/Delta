@@ -5,5 +5,6 @@ public enum Enemies {
     I,
     D,
     S,
-    HAIDES
+    HAIDES;
 }
+
