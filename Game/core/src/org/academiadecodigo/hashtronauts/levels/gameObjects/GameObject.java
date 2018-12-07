@@ -10,9 +10,9 @@ public abstract class GameObject {
     private Texture texture;
     private Rectangle rectangle;
 
-    public GameObject(String texture, int posX, int posY, int width, int height) {
+    public GameObject(String texture, float posX, float posY, int width, int height) {
         if (texture == null) {
-            this.texture = createTexture(posX, posY, width, height);
+            this.texture = createTexture(width, height);
         } else {
             this.texture = new Texture(texture);
         }
@@ -34,7 +34,7 @@ public abstract class GameObject {
     }
 
     //PARA TESTES
-    private Texture createTexture(int posX, int posY, int width, int height) {
+    private Texture createTexture(int width, int height) {
         Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.BLUE);
         pixmap.fill();
