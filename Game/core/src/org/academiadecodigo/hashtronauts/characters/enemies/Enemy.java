@@ -7,6 +7,20 @@ public abstract class Enemy implements BattlingCharacters {
     private int health;
     private boolean defending = false;
     private boolean dead = false;
+    private boolean isHit = false;
+    private int attackPoints = 3;
+
+    public int getAttackPoints() {
+        return attackPoints;
+    }
+
+    public boolean isHit() {
+        return isHit;
+    }
+
+    public void setHit(boolean hit) {
+        isHit = hit;
+    }
 
     public int getHealth() {
         return health;
@@ -18,6 +32,8 @@ public abstract class Enemy implements BattlingCharacters {
 
     public void getHit(int dmg) {
         health -= dmg;
+        isHit = true;
+
     }
 
     public boolean isDefending() {
@@ -30,7 +46,7 @@ public abstract class Enemy implements BattlingCharacters {
 
     @Override
     public int attack() {
-        return 0;
+        return 2;
     }
 
     @Override
@@ -39,7 +55,9 @@ public abstract class Enemy implements BattlingCharacters {
     }
 
     @Override
-    public void useSkill() {}
+    public int useSkill() {
+        return 0;
+    }
 
     @Override
     public boolean isDead() {

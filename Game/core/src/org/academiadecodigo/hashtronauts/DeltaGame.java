@@ -2,11 +2,14 @@ package org.academiadecodigo.hashtronauts;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
+import org.academiadecodigo.hashtronauts.battle.BattleController;
+import org.academiadecodigo.hashtronauts.battle.PlayerAction;
 import org.academiadecodigo.hashtronauts.characters.player.PlatformPlayer;
 import org.academiadecodigo.hashtronauts.levels.gameObjects.ExitPoint;
 import org.academiadecodigo.hashtronauts.levels.gameObjects.GameObject;
@@ -22,7 +25,12 @@ public class DeltaGame extends Game {
     private PlatformPlayer player;
 
     private PlatformLevel level2;
-    private boolean finished1 = false;
+    private boolean finished1 = true;
+
+    private Battle battle;
+    private BattleController battleController;
+    private BitmapFont font;
+
 
     @Override
     public void create() {
@@ -38,12 +46,18 @@ public class DeltaGame extends Game {
 
         player = level1.getPlayer();
 
-
         player.setFalling(false);
 
         level2 = new Platform2();
         ((Platform2) level2).initLevelObjects();
         level2.levelInit();
+
+        battle = new Battle();
+        battle.create();
+        font = new BitmapFont();
+
+        battleController = new BattleController();
+        battleController.create();
 
     }
 
@@ -71,8 +85,8 @@ public class DeltaGame extends Game {
     @Override
     public void dispose() {
         batch.dispose();
-    }
 
+    }
 
 
     public void renderLevel1() {
@@ -119,49 +133,48 @@ public class DeltaGame extends Game {
     }
 
     public void renderLevel2() {
-        
+
+        //Render visuals
+        for (PlayerAction action : battle.getPlayerActions()) {
+            font.draw(batch, action.getMessage(), action.getX(), action.getY());
+        }
+
+        batch.draw(battle.getEnemyHp(), 1600, 1000, battle.getEnemyBar(), 40);
+        batch.draw(battle.getPlayerHp(), 200, 1000, battle.getPlayerBar(), 40);
+
+        batch.draw(battle.getPlayer(), 250, 475);
+        batch.draw(battle.getGuitar(), 130, 775);
+        batch.draw(battle.getBass(), 80, 475);
+        batch.draw(battle.getDrums(), 125, 175);
+
+        batch.draw(battle.getEnemy(), 1600, 475);
 
 
-
-
-        /*for (GameObject object1 : ((Platform2) level2).getGameObjects()) {
-            batch.draw(object1.getTexture(), object1.getRectangle().x, object1.getRectangle().y);
-
-            //check if player landed (floor, or platform)
-            if (player.getRectangle().overlaps(object1.getRectangle())) {
-                if (object1 instanceof ExitPoint) {
-
-                    //TODO: Create here next lvl (battle lvl)
-                    System.out.println("End");
+        //Battle logic
+        if (battle.isPlayerTurn()) {
+            if (battleController.playerTurn()) {
+                if (battleController.getAccuracy() > 10) {
+                    batch.draw(battle.getEnemyHp(), 1600, 1000, battle.setEnemyBar(battle.getPlayerModel().getAttackPoints()), 40);
                 }
-                player.getRectangle().y = object1.getRectangle().y + object1.getRectangle().height;
-                player.setFalling(false);
-            }
+                battle.setPlayerTurn(false);
 
+                if (!battle.isPlayerTurn()) {
+                    battle.setPlayerTurn(battleController.enemyTurn());
+
+                    if (battleController.getAccuracy() > 10) {
+                        batch.draw(battle.getPlayerHp(), 200, 1000, battle.setPlayerBar(battle.getEnemyModel().getAttackPoints()), 40);
+
+                        if (battle.getEnemyBar() <= 0) {
+                            battle.setOver(true);
+                        }
+                    }
+                }
+            }
         }
 
-        batch.draw(player.getTexture(), player.getPosX(), player.getPosY());
 
-        if (player.isJumping()) {
-            if (TimeUtils.nanoTime() - player.getLastJumpTime() < 250000000) {
-                player.setPosY((int) (player.getPosY() + (Configurations.PLAYER_JUMP * Gdx.graphics.getDeltaTime())));
-            }
-
-            if (TimeUtils.nanoTime() - player.getLastJumpTime() > 300000000) {
-                player.stopJump();
-
-            }
-        } else {
-
-            player.setPosY((int) (player.getPosY() - (Configurations.PLAYER_FALL * Gdx.graphics.getDeltaTime())));
-
+        if (battle.isOver()) {
+            font.draw(batch, "Friends will be Friends", 960, 540);
         }
-
-        player.move();
-
-        //if player is not jumping, player is allowed to jump
-        if (!player.isFalling()) {
-            player.jump();
-        }*/
     }
 }

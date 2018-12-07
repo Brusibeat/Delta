@@ -2,105 +2,149 @@ package org.academiadecodigo.hashtronauts.battle;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import org.academiadecodigo.hashtronauts.Battle;
+import org.academiadecodigo.hashtronauts.characters.enemies.Enemy;
+import org.academiadecodigo.hashtronauts.characters.enemies.EnemyA;
+import org.academiadecodigo.hashtronauts.characters.player.BattlePlayer;
 
 public class BattleController {
-    Screen battle;
 
     //Validation for battle over
     private boolean isOver;
+    private Enemy enemy;
+    private BattlePlayer player;
+    private Battle battle;
+    private double accuracy;
 
-    public BattleController(Screen battle){
-        this.battle = battle;
+    public void create() {
+        enemy = new EnemyA(10);
+        player = new BattlePlayer(50);
     }
 
-
-    public void playerTurn(){
+    public boolean playerTurn() {
         //Attack option
-        /*switch(getPlayerInput()){
-            case 'A': battle.getEnemyModel().getHit( battle.getPlayerModel().attack() );
+        switch (getPlayerInput()) {
+            case 'A':
+                enemy.getHit(player.attack());
+                System.out.println("Player Attack");
+                return true;
+            case 'D':
+                player.defend();
+                System.out.println("Player Defense");
+                return true;
+            case 'Q':
+                if (player.getSkillCooldown() == 0) {
+                    enemy.getHit(player.useSkill());
+                    System.out.println("Player Skill");
+                    return true;
+                }
+            case 'W':
+                if (player.getSkillCooldown() == 0) {
+                    enemy.getHit(player.useBassSkill());
+                    System.out.println("Player Skill");
+                    return true;
 
-                    break;
-            case 'D': battle.getPlayerModel().defend();
-                break;
-            case '1': if(battle.getPlayerModel().getSkillCooldown() == 0){
-                            battle.getEnemyModel().getHit( battle.getPlayerModel().useSkill() );
+                }
+            case 'E':
+                if (player.getSkillCooldown() == 0) {
+                    enemy.getHit(player.useDrumSkill());
+                    System.out.println("Player Skill");
+                    return true;
 
-                        }
-                break;
-            case '2':
-                break;
-            case '3':
-                break;
-            case '4':
-                break;
-        }*/
+                }
+            case 'R':
+                if (player.getSkillCooldown() == 0) {
+                    enemy.getHit(player.useGuitarSkill());
+                    System.out.println("Player Skill");
+                    return true;
 
+                }
+        }
+
+        return false;
     }
 
-    public void enemyTurn(){
-        double random = Math.random() * 3;
+    public boolean enemyTurn() {
+        double random = Math.random();
 
-        /*if( random == 0 ){
-            if(isSuccessful()){
-                battle.getPlayerModel().getHit( battle.getEnemyModel().attack() );
+        if (random < 0.5) {
+            if (isSuccessful()) {
+                player.getHit(enemy.attack());
+                System.out.println("Enemy Attack");
+                return true;
             }
         }
 
-        if( random == 1 ){
-            battle.getEnemyModel().defend();
+        if (random < 0.7) {
+            System.out.println("Enemy Defense");
+            enemy.defend();
+            return true;
         }
 
-        if( random == 2 ){
-            if(isSuccessful() ){
-                battle.getPlayerModel().getHit( battle.getEnemyModel().useSkill() );
+        if (random < 1) {
+            if (isSuccessful()) {
+                player.getHit(enemy.useSkill());
+                System.out.println("Enemy Skill");
+                return true;
             }
-        }*/
+        }
 
+        return true;
     }
 
 
-    public char getPlayerInput(){
-        if(Gdx.input.isKeyPressed(Input.Keys.A)){
-            if( isSuccessful()){
+    public char getPlayerInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            if (isSuccessful()) {
+                System.out.println("A pressed");
                 return 'A';
             }
         }
         //Defend option
-        if(Gdx.input.isKeyPressed(Input.Keys.D)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
+            System.out.println("D pressed");
             return 'D';
         }
 
         //Skill options
-        if(Gdx.input.isKeyPressed(Input.Keys.NUM_1)){
-            if( isSuccessful() ){
-                return '1';
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+            if (isSuccessful()) {
+                System.out.println("Q pressed");
+                return 'Q';
             }
         }
 
-           /* if(Gdx.input.isKeyPressed(Input.Keys.NUM_2)){
-
-                choice = true;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)) {
+            if (isSuccessful()) {
+                System.out.println("W pressed");
+                return 'W';
             }
+        }
 
-            if(Gdx.input.isKeyPressed(Input.Keys.NUM_3)){
-
-                choice = true;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            if (isSuccessful()) {
+                System.out.println("E pressed");
+                return 'E';
             }
+        }
 
-            if(Gdx.input.isKeyPressed(Input.Keys.NUM_4)){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.R)) {
+            if (isSuccessful()) {
+                System.out.println("R pressed");
+                return 'R';
+            }
+        }
 
-                choice = true;
-            }*/
-
-           return 'n';
+        return 'n';
     }
 
+    public double getAccuracy() {
+        return accuracy;
+    }
 
-    public boolean isSuccessful(){
-        double accuracy;
+    public boolean isSuccessful() {
         accuracy = Math.random() * 100;
-        if( accuracy >= 10){
+        if (accuracy >= 10) {
             return true;
         }
         return false;

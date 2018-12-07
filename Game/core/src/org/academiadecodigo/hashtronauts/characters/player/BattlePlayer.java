@@ -25,7 +25,7 @@ public class BattlePlayer extends Player implements BattlingCharacters {
     @Override
     public int attack() {
 
-        if(skillCooldown < 3){
+        if(skillCooldown <= 3){
             skillCooldown --;
         }
         if(skillCooldown <= 0){
@@ -36,19 +36,34 @@ public class BattlePlayer extends Player implements BattlingCharacters {
 
     @Override
     public boolean defend() {
-        if(skillCooldown < 3){
-            skillCooldown ++;
+        if(skillCooldown <= 3){
+            skillCooldown --;
         }
-        if(skillCooldown >= 3){
-            skillCooldown = 3;
+        if(skillCooldown <= 0){
+            skillCooldown = 0;
         }
         return defend = true;
     }
 
     @Override
-    public void useSkill() {
+    public int useSkill() {
         skillCooldown = 3;
-        //return skillAttack;
+        return skillAttack;
+    }
+
+    public int useBassSkill() {
+        skillCooldown = 3;
+        return skillAttack - 1;
+    }
+
+    public int useDrumSkill() {
+        skillCooldown = 3;
+        return skillAttack + 3;
+    }
+
+    public int useGuitarSkill() {
+        skillCooldown = 3;
+        return skillAttack + 5;
     }
 
     @Override

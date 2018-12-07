@@ -7,6 +7,11 @@ public class EnemyA extends Enemy {
     }
 
     @Override
+    public int getAttackPoints() {
+        return super.getAttackPoints();
+    }
+
+    @Override
     public void setHealth(int health) {
         super.setHealth(health);
     }
@@ -37,7 +42,8 @@ public class EnemyA extends Enemy {
     }
 
     @Override
-    public void useSkill() {
+    public int useSkill() {
+        return 5;
     }
 
     @Override
