@@ -20,8 +20,8 @@ public class Platform1 extends PlatformLevel {
         gameObjects.add(GameObjectFactory.createPlatform(null, 50, 430, 100, 20));
         gameObjects.add(GameObjectFactory.createPlatform(null, 150, 530, 100, 20));
         gameObjects.add(GameObjectFactory.createPlatform(null, 400, 500, 100, 20));
-        gameObjects.add(GameObjectFactory.createPlatform(null, 500, 350, 100, 20));
-        gameObjects.add(GameObjectFactory.createPlatform(null, 700, 350, 100, 20));
+        gameObjects.add(GameObjectFactory.createPlatform(null, 550, 350, 100, 20));
+        gameObjects.add(GameObjectFactory.createPlatform(null, 750, 350, 100, 20));
         gameObjects.add(GameObjectFactory.createPlatform(null, 800, 450, 100, 20));
         gameObjects.add(GameObjectFactory.createPlatform(null, 700, 550, 100, 20));
         gameObjects.add(GameObjectFactory.createPlatform(null, 600, 670, 100, 20));

@@ -2,7 +2,6 @@ package org.academiadecodigo.hashtronauts;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,6 +22,7 @@ public class DeltaGame extends Game {
 
     private PlatformLevel level2;
     private boolean finished1 = false;
+    private boolean position = false;
 
     @Override
     public void create() {
@@ -31,20 +31,15 @@ public class DeltaGame extends Game {
         camera.setToOrtho(false, Configurations.WINDOW_WIDTH, Configurations.WINDOW_HEIGHT);
 
         level1 = new Platform1();
-
         ((Platform1) level1).initLevelObjects();
         level1.levelInit();
-
-
-        player = level1.getPlayer();
-
-
-        player.setFalling(false);
 
         level2 = new Platform2();
         ((Platform2) level2).initLevelObjects();
         level2.levelInit();
 
+        player = level1.getPlayer();
+        player.setFalling(false);
     }
 
     @Override
@@ -63,6 +58,7 @@ public class DeltaGame extends Game {
             renderLevel2();
         } else {
             renderLevel1();
+
         }
 
         batch.end();
@@ -74,10 +70,9 @@ public class DeltaGame extends Game {
     }
 
 
-
     public void renderLevel1() {
 
-        for (GameObject object : ((Platform1) level1).getGameObjects()) {
+        for (GameObject object : ((Platform2) level2).getGameObjects()) {
             batch.draw(object.getTexture(), object.getRectangle().x, object.getRectangle().y);
 
             //check if player landed (floor, or platform)
@@ -101,12 +96,9 @@ public class DeltaGame extends Game {
 
             if (TimeUtils.nanoTime() - player.getLastJumpTime() > 300000000) {
                 player.stopJump();
-
             }
         } else {
-
             player.setPosY((int) (player.getPosY() - (Configurations.PLAYER_FALL * Gdx.graphics.getDeltaTime())));
-
         }
 
         player.move();
@@ -115,29 +107,29 @@ public class DeltaGame extends Game {
         if (!player.isFalling()) {
             player.jump();
         }
-
     }
 
+
     public void renderLevel2() {
-        
 
+        if (!position) {
+            player.getRectangle().setX(0);
+            player.getRectangle().setY(0);
+            position = true;
+        }
 
-
-
-        /*for (GameObject object1 : ((Platform2) level2).getGameObjects()) {
+        for (GameObject object1 : ((Platform2) level2).getGameObjects()) {
             batch.draw(object1.getTexture(), object1.getRectangle().x, object1.getRectangle().y);
 
             //check if player landed (floor, or platform)
             if (player.getRectangle().overlaps(object1.getRectangle())) {
                 if (object1 instanceof ExitPoint) {
-
-                    //TODO: Create here next lvl (battle lvl)
                     System.out.println("End");
                 }
                 player.getRectangle().y = object1.getRectangle().y + object1.getRectangle().height;
                 player.setFalling(false);
-            }
 
+            }
         }
 
         batch.draw(player.getTexture(), player.getPosX(), player.getPosY());
@@ -147,8 +139,9 @@ public class DeltaGame extends Game {
                 player.setPosY((int) (player.getPosY() + (Configurations.PLAYER_JUMP * Gdx.graphics.getDeltaTime())));
             }
 
-            if (TimeUtils.nanoTime() - player.getLastJumpTime() > 300000000) {
+            if ((TimeUtils.nanoTime() - player.getLastJumpTime() > 300000000)) {
                 player.stopJump();
+
 
             }
         } else {
@@ -162,6 +155,6 @@ public class DeltaGame extends Game {
         //if player is not jumping, player is allowed to jump
         if (!player.isFalling()) {
             player.jump();
-        }*/
+        }
     }
 }
